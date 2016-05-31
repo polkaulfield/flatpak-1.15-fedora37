@@ -1,12 +1,12 @@
 Name:           flatpak
-Version:        0.6.2
+Version:        0.6.3
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
 License:        LGPLv2+
 URL:            https://flatpak.github.io/
-Source0:        https://www.freedesktop.org/software/xdg-app/releases/%{name}-%{version}.tar.xz
+Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gio-unix-2.0)
@@ -85,7 +85,7 @@ Provides:       xdg-app-libs%{?_isa} = %{version}-%{release}
 Obsoletes:      xdg-app-libs <= 0.5.2-2
 
 %description libs
-This package contains libflatpak and the bubblewrap helper.
+This package contains libflatpak.
 
 
 %prep
@@ -95,7 +95,7 @@ This package contains libflatpak and the bubblewrap helper.
 %build
 # User namespace support is sufficient.
 %configure --with-dwarf-header=%{_includedir}/libdwarf --with-priv-mode=none
-%make_build
+%make_build V=1
 
 
 %install
@@ -116,9 +116,8 @@ flatpak remote-list --system
 
 
 %files
-# A README would be nice.
 %license COPYING
-%doc NEWS
+%doc NEWS README.md
 %{_bindir}/flatpak
 %{_datadir}/bash-completion
 %{_datadir}/dbus-1/interfaces/org.freedesktop.Flatpak.xml
@@ -128,10 +127,12 @@ flatpak remote-list --system
 %{_datadir}/dbus-1/services/org.freedesktop.impl.portal.PermissionStore.service
 %{_datadir}/dbus-1/services/org.freedesktop.portal.Documents.service
 %{_datadir}/dbus-1/system-services/org.freedesktop.Flatpak.SystemHelper.service
+# Co-own directory.
 %{_datadir}/gdm/env.d
 %{_datadir}/%{name}
 %{_datadir}/polkit-1/actions/org.freedesktop.Flatpak.policy
 %{_datadir}/polkit-1/rules.d/org.freedesktop.Flatpak.rules
+%{_libexecdir}/flatpak-bwrap
 %{_libexecdir}/flatpak-dbus-proxy
 %{_libexecdir}/flatpak-session-helper
 %{_libexecdir}/flatpak-system-helper
@@ -160,11 +161,14 @@ flatpak remote-list --system
 
 %files libs
 %license COPYING
-%{_libdir}/flatpak/
 %{_libdir}/girepository-1.0/Flatpak-1.0.typelib
 %{_libdir}/libflatpak.so.*
 
 
 %changelog
+* Tue May 31 2016 David King <amigadave@amigadave.com> - 0.6.3-1
+- Update to 0.6.3
+- Move bwrap to main package
+
 * Tue May 24 2016 David King <amigadave@amigadave.com> - 0.6.2-1
 - Rename from xdg-app to flatpak (#1337434)

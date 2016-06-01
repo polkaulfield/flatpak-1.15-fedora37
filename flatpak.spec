@@ -1,5 +1,5 @@
 Name:           flatpak
-Version:        0.6.3
+Version:        0.6.4
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -166,6 +166,9 @@ flatpak remote-list --system
 
 
 %changelog
+* Wed Jun 01 2016 David King <amigadave@amigadave.com> - 0.6.4-1
+- Update to 0.6.4
+
 * Tue May 31 2016 David King <amigadave@amigadave.com> - 0.6.3-1
 - Update to 0.6.3
 - Move bwrap to main package

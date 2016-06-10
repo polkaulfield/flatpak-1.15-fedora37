@@ -8,6 +8,8 @@ License:        LGPLv2+
 URL:            https://flatpak.github.io/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 
+BuildRequires:  automake autoconf libtool
+BuildRequires:  gtk-doc
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(json-glib-1.0)
@@ -93,8 +95,9 @@ This package contains libflatpak.
 
 
 %build
-# User namespace support is sufficient.
-%configure --with-dwarf-header=%{_includedir}/libdwarf --with-priv-mode=none
+(if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--enable-gtk-doc; fi;
+ # User namespace support is sufficient.
+ %configure --with-dwarf-header=%{_includedir}/libdwarf --with-priv-mode=none $CONFIGFLAGS)
 %make_build V=1
 
 

@@ -1,11 +1,11 @@
 Name:           flatpak
-Version:        0.6.5
+Version:        0.6.6
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
 License:        LGPLv2+
-URL:            https://flatpak.github.io/
+URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  automake autoconf libtool
@@ -169,6 +169,9 @@ flatpak remote-list --system
 
 
 %changelog
+* Thu Jun 23 2016 David King <amigadave@amigadave.com> - 0.6.6-1
+- Update to 0.6.6
+
 * Fri Jun 10 2016 David King <amigadave@amigadave.com> - 0.6.5-1
 - Update to 0.6.5
 

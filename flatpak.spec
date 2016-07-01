@@ -1,5 +1,5 @@
 Name:           flatpak
-Version:        0.6.6
+Version:        0.6.7
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -17,7 +17,7 @@ BuildRequires:  pkgconfig(libarchive) >= 2.8.0
 BuildRequires:  pkgconfig(libelf) >= 0.8.12
 BuildRequires:  pkgconfig(libgsystem) >= 2015.1
 BuildRequires:  pkgconfig(libsoup-2.4)
-BuildRequires:  pkgconfig(ostree-1) >= 2016.5
+BuildRequires:  pkgconfig(ostree-1) >= 2016.6
 BuildRequires:  pkgconfig(polkit-gobject-1)
 BuildRequires:  pkgconfig(libseccomp)
 BuildRequires:  pkgconfig(xau)
@@ -143,6 +143,7 @@ flatpak remote-list --system
 %{_libexecdir}/xdg-permission-store
 %dir %{_localstatedir}/lib/flatpak
 %{_mandir}/man1/%{name}*.1*
+%{_mandir}/man5/%{name}-metadata.5*
 %exclude %{_mandir}/man1/flatpak-builder.1*
 %{_sysconfdir}/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
 %{_sysconfdir}/profile.d/flatpak.sh
@@ -169,6 +170,9 @@ flatpak remote-list --system
 
 
 %changelog
+* Fri Jul 01 2016 David King <amigadave@amigadave.com> - 0.6.7-1
+- Update to 0.6.7
+
 * Thu Jun 23 2016 David King <amigadave@amigadave.com> - 0.6.6-1
 - Update to 0.6.6
 

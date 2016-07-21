@@ -1,6 +1,6 @@
 Name:           flatpak
 Version:        0.6.7
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
@@ -28,6 +28,7 @@ BuildRequires:  libattr-devel
 BuildRequires:  libcap-devel
 BuildRequires:  libdwarf-devel
 BuildRequires:  systemd
+BuildRequires:  /usr/bin/bwrap
 BuildRequires:  /usr/bin/xsltproc
 
 # Crashes with older kernels (the bug being introduced in 4.0.2), without the
@@ -36,6 +37,8 @@ Requires:       kernel >= 4.0.4-202
 
 # Needed for the document portal.
 Requires:       /usr/bin/fusermount
+
+Requires:       /usr/bin/bwrap
 
 # Remove in F27.
 Provides:       xdg-app = %{version}-%{release}
@@ -82,6 +85,7 @@ This package contains the pkg-config file and development headers for %{name}.
 Summary:        Libraries for %{name}
 Group:          Development/Libraries
 License:        LGPLv2+
+Requires:       /usr/bin/bwrap
 # Remove in F27.
 Provides:       xdg-app-libs%{?_isa} = %{version}-%{release}
 Obsoletes:      xdg-app-libs <= 0.5.2-2
@@ -97,7 +101,8 @@ This package contains libflatpak.
 %build
 (if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--enable-gtk-doc; fi;
  # User namespace support is sufficient.
- %configure --with-dwarf-header=%{_includedir}/libdwarf --with-priv-mode=none $CONFIGFLAGS)
+ %configure --with-dwarf-header=%{_includedir}/libdwarf --with-priv-mode=none \
+            --with-system-bubblewrap $CONFIGFLAGS)
 %make_build V=1
 
 
@@ -107,7 +112,6 @@ This package contains libflatpak.
 install -d %{buildroot}%{_localstatedir}/lib/flatpak
 rm -f %{buildroot}%{_libdir}/libflatpak.la
 
-%find_lang flatpak
 
 %post
 # Create an (empty) system-wide repo.
@@ -119,7 +123,7 @@ flatpak remote-list --system
 %postun libs -p /sbin/ldconfig
 
 
-%files -f flatpak
+%files
 %license COPYING
 %doc NEWS README.md
 %{_bindir}/flatpak
@@ -136,7 +140,6 @@ flatpak remote-list --system
 %{_datadir}/%{name}
 %{_datadir}/polkit-1/actions/org.freedesktop.Flatpak.policy
 %{_datadir}/polkit-1/rules.d/org.freedesktop.Flatpak.rules
-%{_libexecdir}/flatpak-bwrap
 %{_libexecdir}/flatpak-dbus-proxy
 %{_libexecdir}/flatpak-session-helper
 %{_libexecdir}/flatpak-system-helper
@@ -171,6 +174,9 @@ flatpak remote-list --system
 
 
 %changelog
+* Thu Jul 21 2016 David King <amigadave@amigadave.com> - 0.6.7-2
+- Use system bubblewrap
+
 * Fri Jul 01 2016 David King <amigadave@amigadave.com> - 0.6.7-1
 - Update to 0.6.7
 

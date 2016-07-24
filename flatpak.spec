@@ -112,7 +112,6 @@ This package contains libflatpak.
 install -d %{buildroot}%{_localstatedir}/lib/flatpak
 rm -f %{buildroot}%{_libdir}/libflatpak.la
 
-%find_lang flatpak
 
 %post
 # Create an (empty) system-wide repo.
@@ -124,7 +123,7 @@ flatpak remote-list --system
 %postun libs -p /sbin/ldconfig
 
 
-%files -f flatpak
+%files
 %license COPYING
 %doc NEWS README.md
 %{_bindir}/flatpak

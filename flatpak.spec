@@ -165,7 +165,7 @@ flatpak remote-list --system
 %{_userunitdir}/xdg-document-portal.service
 %{_userunitdir}/xdg-permission-store.service
 # Co-own directory.
-%{_userunitdir}/dbus.service.d/flatpak.conf
+%{_userunitdir}/dbus.service.d
 
 %files builder
 %{_bindir}/flatpak-builder

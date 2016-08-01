@@ -1,12 +1,15 @@
 Name:           flatpak
-Version:        0.6.7
-Release:        2%{?dist}
+Version:        0.6.8
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
+# Until https://github.com/flatpak/flatpak/pull/225 is merged and a new release
+# made.
+Patch0:         flatpak-0.6.8-add-flatpak-metadata-xml.patch
 
 BuildRequires:  automake autoconf libtool
 BuildRequires:  gtk-doc
@@ -17,7 +20,7 @@ BuildRequires:  pkgconfig(libarchive) >= 2.8.0
 BuildRequires:  pkgconfig(libelf) >= 0.8.12
 BuildRequires:  pkgconfig(libgsystem) >= 2015.1
 BuildRequires:  pkgconfig(libsoup-2.4)
-BuildRequires:  pkgconfig(ostree-1) >= 2016.6
+BuildRequires:  pkgconfig(ostree-1) >= 2016.7
 BuildRequires:  pkgconfig(polkit-gobject-1)
 BuildRequires:  pkgconfig(libseccomp)
 BuildRequires:  pkgconfig(xau)
@@ -29,6 +32,7 @@ BuildRequires:  libcap-devel
 BuildRequires:  libdwarf-devel
 BuildRequires:  systemd
 BuildRequires:  /usr/bin/bwrap
+BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
 
 # Crashes with older kernels (the bug being introduced in 4.0.2), without the
@@ -96,21 +100,24 @@ This package contains libflatpak.
 
 %prep
 %setup -q
+%patch0 -p1
 
 
 %build
 (if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--enable-gtk-doc; fi;
  # User namespace support is sufficient.
  %configure --with-dwarf-header=%{_includedir}/libdwarf --with-priv-mode=none \
-            --with-system-bubblewrap $CONFIGFLAGS)
+            --with-system-bubblewrap --enable-docbook-docs $CONFIGFLAGS)
 %make_build V=1
 
 
 %install
 %make_install
+install -pm 644 NEWS README.md %{buildroot}/%{_pkgdocdir}
 # The system repo is not installed by the flatpak build system.
 install -d %{buildroot}%{_localstatedir}/lib/flatpak
 rm -f %{buildroot}%{_libdir}/libflatpak.la
+%find_lang %{name}
 
 
 %post
@@ -123,9 +130,11 @@ flatpak remote-list --system
 %postun libs -p /sbin/ldconfig
 
 
-%files
+%files -f %{name}.lang
 %license COPYING
-%doc NEWS README.md
+# Comply with the packaging guidelines about not mixing relative and absolute
+# paths in doc.
+%doc %{_pkgdocdir}
 %{_bindir}/flatpak
 %{_datadir}/bash-completion
 %{_datadir}/dbus-1/interfaces/org.freedesktop.Flatpak.xml
@@ -155,6 +164,8 @@ flatpak remote-list --system
 %{_userunitdir}/flatpak-session-helper.service
 %{_userunitdir}/xdg-document-portal.service
 %{_userunitdir}/xdg-permission-store.service
+# Co-own directory.
+%{_userunitdir}/dbus.service.d/flatpak.conf
 
 %files builder
 %{_bindir}/flatpak-builder
@@ -174,6 +185,9 @@ flatpak remote-list --system
 
 
 %changelog
+* Mon Aug 01 2016 David King <amigadave@amigadave.com> - 0.6.8-1
+- Update to 0.6.8 (#1361823)
+
 * Thu Jul 21 2016 David King <amigadave@amigadave.com> - 0.6.7-2
 - Use system bubblewrap
 

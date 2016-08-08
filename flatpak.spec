@@ -43,6 +43,7 @@ Requires:       kernel >= 4.0.4-202
 Requires:       /usr/bin/fusermount
 
 Requires:       /usr/bin/bwrap
+Requires:       glib-networking
 
 # Remove in F27.
 Provides:       xdg-app = %{version}-%{release}

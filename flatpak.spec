@@ -1,5 +1,5 @@
 Name:           flatpak
-Version:        0.6.8
+Version:        0.6.9
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -7,18 +7,13 @@ Group:          Development/Tools
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Until https://github.com/flatpak/flatpak/pull/225 is merged and a new release
-# made.
-Patch0:         flatpak-0.6.8-add-flatpak-metadata-xml.patch
 
-BuildRequires:  automake autoconf libtool
-BuildRequires:  gtk-doc
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gio-unix-2.0)
+BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 1.40.0
 BuildRequires:  pkgconfig(json-glib-1.0)
 BuildRequires:  pkgconfig(libarchive) >= 2.8.0
 BuildRequires:  pkgconfig(libelf) >= 0.8.12
-BuildRequires:  pkgconfig(libgsystem) >= 2015.1
 BuildRequires:  pkgconfig(libsoup-2.4)
 BuildRequires:  pkgconfig(ostree-1) >= 2016.7
 BuildRequires:  pkgconfig(polkit-gobject-1)
@@ -43,7 +38,6 @@ Requires:       kernel >= 4.0.4-202
 Requires:       /usr/bin/fusermount
 
 Requires:       /usr/bin/bwrap
-Requires:       glib-networking
 
 # Remove in F27.
 Provides:       xdg-app = %{version}-%{release}
@@ -101,7 +95,6 @@ This package contains libflatpak.
 
 %prep
 %setup -q
-%patch0 -p1
 
 
 %build
@@ -186,6 +179,9 @@ flatpak remote-list --system
 
 
 %changelog
+* Thu Aug 25 2016 David King <amigadave@amigadave.com> - 0.6.9-1
+- Update to 0.6.9
+
 * Mon Aug 01 2016 David King <amigadave@amigadave.com> - 0.6.8-1
 - Update to 0.6.8 (#1361823)
 

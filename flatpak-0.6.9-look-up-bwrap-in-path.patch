@@ -1,0 +1,24 @@
+From 983b2a5db124a44d86f8e6577763df8544d73838 Mon Sep 17 00:00:00 2001
+From: Alexander Larsson <alexl@redhat.com>
+Date: Tue, 6 Sep 2016 15:28:26 +0200
+Subject: [PATCH] lib: Look for "bwrap" in PATH when launching from libflatpak
+
+We forgot to look in the path, which made it fail when using
+the system bwrap and not passing a full path.
+---
+ common/flatpak-run.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/common/flatpak-run.c b/common/flatpak-run.c
+index 1c06574..8e63a62 100644
+--- a/common/flatpak-run.c
++++ b/common/flatpak-run.c
+@@ -3413,7 +3413,7 @@ flatpak_run_app (const char     *app_ref,
+       if (!g_spawn_async (NULL,
+                           (char **) real_argv_array->pdata,
+                           envp,
+-                          G_SPAWN_DEFAULT,
++                          G_SPAWN_SEARCH_PATH,
+                           child_setup, fd_array,
+                           NULL,
+                           error))

@@ -1,14 +1,12 @@
 Name:           flatpak
-Version:        0.6.9
-Release:        2%{?dist}
+Version:        0.6.10
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Taken from upstream git.
-Patch0:         flatpak-0.6.9-look-up-bwrap-in-path.patch
 
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gio-unix-2.0)
@@ -17,7 +15,7 @@ BuildRequires:  pkgconfig(json-glib-1.0)
 BuildRequires:  pkgconfig(libarchive) >= 2.8.0
 BuildRequires:  pkgconfig(libelf) >= 0.8.12
 BuildRequires:  pkgconfig(libsoup-2.4)
-BuildRequires:  pkgconfig(ostree-1) >= 2016.7
+BuildRequires:  pkgconfig(ostree-1) >= 2016.10
 BuildRequires:  pkgconfig(polkit-gobject-1)
 BuildRequires:  pkgconfig(libseccomp)
 BuildRequires:  pkgconfig(xau)
@@ -39,7 +37,7 @@ Requires:       kernel >= 4.0.4-202
 # Needed for the document portal.
 Requires:       /usr/bin/fusermount
 
-Requires:       /usr/bin/bwrap
+Requires:       bubblewrap >= 0.1.2
 
 # Remove in F27.
 Provides:       xdg-app = %{version}-%{release}
@@ -86,7 +84,7 @@ This package contains the pkg-config file and development headers for %{name}.
 Summary:        Libraries for %{name}
 Group:          Development/Libraries
 License:        LGPLv2+
-Requires:       /usr/bin/bwrap
+Requires:       bubblewrap >= 0.1.2
 # Remove in F27.
 Provides:       xdg-app-libs%{?_isa} = %{version}-%{release}
 Obsoletes:      xdg-app-libs <= 0.5.2-2
@@ -97,7 +95,6 @@ This package contains libflatpak.
 
 %prep
 %setup -q
-%patch0 -p1
 
 
 %build
@@ -182,6 +179,9 @@ flatpak remote-list --system
 
 
 %changelog
+* Mon Sep 12 2016 David King <amigadave@amigadave.com> - 0.6.10-1
+- Update to 0.6.10
+
 * Tue Sep 06 2016 David King <amigadave@amigadave.com> - 0.6.9-2
 - Look for bwrap in PATH
 

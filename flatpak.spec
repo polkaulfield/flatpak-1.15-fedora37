@@ -1,5 +1,5 @@
 Name:           flatpak
-Version:        0.6.10
+Version:        0.6.11
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -151,6 +151,8 @@ flatpak remote-list --system
 %dir %{_localstatedir}/lib/flatpak
 %{_mandir}/man1/%{name}*.1*
 %{_mandir}/man5/%{name}-metadata.5*
+%{_mandir}/man5/flatpak-flatpakref.5*
+%{_mandir}/man5/flatpak-flatpakrepo.5*
 %exclude %{_mandir}/man1/flatpak-builder.1*
 %{_sysconfdir}/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
 %{_sysconfdir}/profile.d/flatpak.sh
@@ -179,6 +181,9 @@ flatpak remote-list --system
 
 
 %changelog
+* Tue Sep 20 2016 Kalev Lember <klember@redhat.com> - 0.6.11-1
+- Update to 0.6.11
+
 * Mon Sep 12 2016 David King <amigadave@amigadave.com> - 0.6.10-1
 - Update to 0.6.10
 

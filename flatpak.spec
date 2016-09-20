@@ -1,3 +1,6 @@
+%global bubblewrap_version 0.1.2
+%global ostree_version 2016.10
+
 Name:           flatpak
 Version:        0.6.11
 Release:        1%{?dist}
@@ -15,10 +18,11 @@ BuildRequires:  pkgconfig(json-glib-1.0)
 BuildRequires:  pkgconfig(libarchive) >= 2.8.0
 BuildRequires:  pkgconfig(libelf) >= 0.8.12
 BuildRequires:  pkgconfig(libsoup-2.4)
-BuildRequires:  pkgconfig(ostree-1) >= 2016.10
+BuildRequires:  pkgconfig(ostree-1) >= %{ostree_version}
 BuildRequires:  pkgconfig(polkit-gobject-1)
 BuildRequires:  pkgconfig(libseccomp)
 BuildRequires:  pkgconfig(xau)
+BuildRequires:  bubblewrap >= %{bubblewrap_version}
 BuildRequires:  docbook-dtds
 BuildRequires:  docbook-style-xsl
 BuildRequires:  intltool
@@ -26,7 +30,6 @@ BuildRequires:  libattr-devel
 BuildRequires:  libcap-devel
 BuildRequires:  libdwarf-devel
 BuildRequires:  systemd
-BuildRequires:  /usr/bin/bwrap
 BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
 
@@ -37,7 +40,8 @@ Requires:       kernel >= 4.0.4-202
 # Needed for the document portal.
 Requires:       /usr/bin/fusermount
 
-Requires:       bubblewrap >= 0.1.2
+Requires:       bubblewrap >= %{bubblewrap_version}
+Requires:       ostree%{?_isa} >= %{ostree_version}
 
 # Remove in F27.
 Provides:       xdg-app = %{version}-%{release}
@@ -84,7 +88,8 @@ This package contains the pkg-config file and development headers for %{name}.
 Summary:        Libraries for %{name}
 Group:          Development/Libraries
 License:        LGPLv2+
-Requires:       bubblewrap >= 0.1.2
+Requires:       bubblewrap >= %{bubblewrap_version}
+Requires:       ostree%{?_isa} >= %{ostree_version}
 # Remove in F27.
 Provides:       xdg-app-libs%{?_isa} = %{version}-%{release}
 Obsoletes:      xdg-app-libs <= 0.5.2-2
@@ -183,6 +188,7 @@ flatpak remote-list --system
 %changelog
 * Tue Sep 20 2016 Kalev Lember <klember@redhat.com> - 0.6.11-1
 - Update to 0.6.11
+- Set minimum ostree and bubblewrap versions
 
 * Mon Sep 12 2016 David King <amigadave@amigadave.com> - 0.6.10-1
 - Update to 0.6.10

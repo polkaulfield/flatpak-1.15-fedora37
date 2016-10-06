@@ -2,7 +2,7 @@
 %global ostree_version 2016.10
 
 Name:           flatpak
-Version:        0.6.11
+Version:        0.6.12
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -186,6 +186,9 @@ flatpak remote-list --system
 
 
 %changelog
+* Thu Oct 06 2016 David King <amigadave@amigadave.com> - 0.6.12-1
+- Update to 0.6.12
+
 * Tue Sep 20 2016 Kalev Lember <klember@redhat.com> - 0.6.11-1
 - Update to 0.6.11
 - Set minimum ostree and bubblewrap versions

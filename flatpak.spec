@@ -1,8 +1,9 @@
-%global bubblewrap_version 0.1.2
-%global ostree_version 2016.10
+# Although technically 0.1.2 satisfies configure, 0.1.3 has a security fix.
+%global bubblewrap_version 0.1.3
+%global ostree_version 2016.12
 
 Name:           flatpak
-Version:        0.6.12
+Version:        0.6.13
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -186,6 +187,9 @@ flatpak remote-list --system
 
 
 %changelog
+* Tue Oct 25 2016 David King <amigadave@amigadave.com> - 0.6.13-1
+- Update to 0.6.13
+
 * Thu Oct 06 2016 David King <amigadave@amigadave.com> - 0.6.12-1
 - Update to 0.6.12
 

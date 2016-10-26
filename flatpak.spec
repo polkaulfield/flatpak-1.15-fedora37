@@ -4,7 +4,7 @@
 
 Name:           flatpak
 Version:        0.6.13
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
@@ -116,6 +116,7 @@ This package contains libflatpak.
 install -pm 644 NEWS README.md %{buildroot}/%{_pkgdocdir}
 # The system repo is not installed by the flatpak build system.
 install -d %{buildroot}%{_localstatedir}/lib/flatpak
+install -d %{buildroot}%{_sysconfdir}/flatpak/remotes.d
 rm -f %{buildroot}%{_libdir}/libflatpak.la
 %find_lang %{name}
 
@@ -161,6 +162,7 @@ flatpak remote-list --system
 %{_mandir}/man5/flatpak-flatpakrepo.5*
 %exclude %{_mandir}/man1/flatpak-builder.1*
 %{_sysconfdir}/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
+%{_sysconfdir}/flatpak/remotes.d
 %{_sysconfdir}/profile.d/flatpak.sh
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-session-helper.service
@@ -187,6 +189,9 @@ flatpak remote-list --system
 
 
 %changelog
+* Wed Oct 26 2016 David King <amigadave@amigadave.com> - 0.6.13-2
+- Add empty /etc/flatpak/remotes.d
+
 * Tue Oct 25 2016 David King <amigadave@amigadave.com> - 0.6.13-1
 - Update to 0.6.13
 

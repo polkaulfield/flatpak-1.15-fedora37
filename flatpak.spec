@@ -4,13 +4,15 @@
 
 Name:           flatpak
 Version:        0.6.14
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
+# Fix a GNOME Software crash.
+Patch0:         flatpak-0.6.14-fix-gnome-software-crash.patch
 
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gio-unix-2.0)
@@ -101,6 +103,7 @@ This package contains libflatpak.
 
 %prep
 %setup -q
+%patch0 -p1
 
 
 %build
@@ -123,7 +126,7 @@ rm -f %{buildroot}%{_libdir}/libflatpak.la
 
 %post
 # Create an (empty) system-wide repo.
-flatpak remote-list --system
+flatpak remote-list --system &> /dev/null || :
 
 %post libs -p /sbin/ldconfig
 
@@ -189,6 +192,10 @@ flatpak remote-list --system
 
 
 %changelog
+* Tue Nov 29 2016 David King <amigadave@amigadave.com> - 0.6.14-2
+- Add a patch to fix a GNOME Software crash
+- Silence repository listing during post
+
 * Tue Nov 29 2016 Kalev Lember <klember@redhat.com> - 0.6.14-1
 - Update to 0.6.14
 

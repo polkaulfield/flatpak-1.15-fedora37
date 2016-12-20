@@ -1,18 +1,15 @@
-# Although technically 0.1.2 satisfies configure, 0.1.3 has a security fix.
-%global bubblewrap_version 0.1.3
+%global bubblewrap_version 0.1.5
 %global ostree_version 2016.14
 
 Name:           flatpak
-Version:        0.6.14
-Release:        2%{?dist}
+Version:        0.8.0
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
-# Fix a GNOME Software crash.
-Patch0:         flatpak-0.6.14-fix-gnome-software-crash.patch
 
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gio-unix-2.0)
@@ -103,7 +100,6 @@ This package contains libflatpak.
 
 %prep
 %setup -q
-%patch0 -p1
 
 
 %build
@@ -192,6 +188,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Tue Dec 20 2016 Kalev Lember <klember@redhat.com> - 0.8.0-1
+- Update to 0.8.0
+
 * Tue Nov 29 2016 David King <amigadave@amigadave.com> - 0.6.14-2
 - Add a patch to fix a GNOME Software crash
 - Silence repository listing during post

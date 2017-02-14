@@ -2,8 +2,8 @@
 %global ostree_version 2016.14
 
 Name:           flatpak
-Version:        0.8.2
-Release:        2%{?dist}
+Version:        0.8.3
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
@@ -188,6 +188,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Tue Feb 14 2017 Kalev Lember <klember@redhat.com> - 0.8.3-1
+- Update to 0.8.3
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.8.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 

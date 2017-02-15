@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        0.8.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
@@ -41,7 +41,7 @@ Requires:       kernel >= 4.0.4-202
 Requires:       /usr/bin/fusermount
 
 Requires:       bubblewrap >= %{bubblewrap_version}
-Requires:       ostree%{?_isa} >= %{ostree_version}
+Requires:       ostree-libs%{?_isa} >= %{ostree_version}
 
 # Remove in F27.
 Provides:       xdg-app = %{version}-%{release}
@@ -188,6 +188,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Wed Feb 15 2017 Kalev Lember <klember@redhat.com> - 0.8.3-2
+- Avoid pulling in all of ostree and only depend on ostree-libs subpackage
+
 * Tue Feb 14 2017 Kalev Lember <klember@redhat.com> - 0.8.3-1
 - Update to 0.8.3
 

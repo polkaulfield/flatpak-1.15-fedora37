@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        0.8.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
@@ -57,6 +57,7 @@ Summary:        Build helper for %{name}
 Group:          Development/Tools
 License:        LGPLv2+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       /usr/bin/bzip2
 Requires:       /usr/bin/bzr
 Requires:       /usr/bin/git
 Requires:       /usr/bin/patch
@@ -188,6 +189,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Sun Feb 19 2017 David King <amigadave@amigadave.com> - 0.8.3-3
+- Make flatpak-builder require bzip2 (#1424857)
+
 * Wed Feb 15 2017 Kalev Lember <klember@redhat.com> - 0.8.3-2
 - Avoid pulling in all of ostree and only depend on ostree-libs subpackage
 

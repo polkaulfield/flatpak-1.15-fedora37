@@ -2,7 +2,7 @@
 %global ostree_version 2016.14
 
 Name:           flatpak
-Version:        0.8.4
+Version:        0.9.1
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -137,6 +137,7 @@ flatpak remote-list --system &> /dev/null || :
 # paths in doc.
 %doc %{_pkgdocdir}
 %{_bindir}/flatpak
+%{_bindir}/flatpak-bisect
 %{_datadir}/bash-completion
 %{_datadir}/dbus-1/interfaces/org.freedesktop.Flatpak.xml
 %{_datadir}/dbus-1/interfaces/org.freedesktop.portal.Documents.xml
@@ -189,6 +190,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Wed Mar 15 2017 Kalev Lember <klember@redhat.com> - 0.9.1-1
+- Update to 0.9.1
+
 * Fri Mar 10 2017 Kalev Lember <klember@redhat.com> - 0.8.4-1
 - Update to 0.8.4
 

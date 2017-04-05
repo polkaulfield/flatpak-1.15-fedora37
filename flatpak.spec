@@ -25,6 +25,7 @@ BuildRequires:  pkgconfig(xau)
 BuildRequires:  bubblewrap >= %{bubblewrap_version}
 BuildRequires:  docbook-dtds
 BuildRequires:  docbook-style-xsl
+BuildRequires:  gpgme-devel
 BuildRequires:  intltool
 BuildRequires:  libattr-devel
 BuildRequires:  libcap-devel

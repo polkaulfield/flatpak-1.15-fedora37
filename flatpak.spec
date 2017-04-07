@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        0.9.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
@@ -65,6 +65,8 @@ Requires:       /usr/bin/patch
 Requires:       /usr/bin/strip
 Requires:       /usr/bin/tar
 Requires:       /usr/bin/unzip
+# For debuginfo.
+Requires:       /usr/bin/eu-strip
 # Remove in F27.
 Provides:       xdg-app-builder = %{version}-%{release}
 Obsoletes:      xdg-app-builder <= 0.5.2-2
@@ -192,6 +194,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Fri Apr 07 2017 David King <amigadave@amigadave.com> - 0.9.2-2
+- Add eu-strip dependency for flatpak-builder
+
 * Wed Apr 05 2017 Kalev Lember <klember@redhat.com> - 0.9.2-1
 - Update to 0.9.2
 

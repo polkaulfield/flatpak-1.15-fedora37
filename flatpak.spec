@@ -2,8 +2,8 @@
 %global ostree_version 2016.14
 
 Name:           flatpak
-Version:        0.9.2
-Release:        2%{?dist}
+Version:        0.9.3
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
@@ -164,7 +164,9 @@ flatpak remote-list --system &> /dev/null || :
 %{_mandir}/man5/%{name}-metadata.5*
 %{_mandir}/man5/flatpak-flatpakref.5*
 %{_mandir}/man5/flatpak-flatpakrepo.5*
+%{_mandir}/man5/flatpak-installation.5*
 %{_mandir}/man5/flatpak-manifest.5*
+%{_mandir}/man5/flatpak-remote.5*
 %exclude %{_mandir}/man1/flatpak-builder.1*
 %{_sysconfdir}/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
 %{_sysconfdir}/flatpak/remotes.d
@@ -194,6 +196,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Mon Apr 24 2017 David King <amigadave@amigadave.com> - 0.9.3-1
+- Update to 0.9.3
+
 * Fri Apr 07 2017 David King <amigadave@amigadave.com> - 0.9.2-2
 - Add eu-strip dependency for flatpak-builder
 

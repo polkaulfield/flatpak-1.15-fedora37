@@ -1,8 +1,8 @@
-%global bubblewrap_version 0.1.5
-%global ostree_version 2016.14
+%global bubblewrap_version 0.1.8
+%global ostree_version 2017.6
 
 Name:           flatpak
-Version:        0.9.3
+Version:        0.9.4
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -18,6 +18,7 @@ BuildRequires:  pkgconfig(json-glib-1.0)
 BuildRequires:  pkgconfig(libarchive) >= 2.8.0
 BuildRequires:  pkgconfig(libelf) >= 0.8.12
 BuildRequires:  pkgconfig(libsoup-2.4)
+BuildRequires:  pkgconfig(libxml-2.0) >= 2.4
 BuildRequires:  pkgconfig(ostree-1) >= %{ostree_version}
 BuildRequires:  pkgconfig(polkit-gobject-1)
 BuildRequires:  pkgconfig(libseccomp)
@@ -196,6 +197,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Tue May 23 2017 David King <amigadave@amigadave.com> - 0.9.4-1
+- Update to 0.9.4 (#1454750)
+
 * Mon Apr 24 2017 David King <amigadave@amigadave.com> - 0.9.3-1
 - Update to 0.9.3
 

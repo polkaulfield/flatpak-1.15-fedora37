@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        0.9.7
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
@@ -197,6 +197,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.7-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Sat Jul 01 2017 David King <amigadave@amigadave.com> - 0.9.7-1
 - Update to 0.9.7 (#1466970)
 

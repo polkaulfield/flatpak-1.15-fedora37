@@ -106,7 +106,7 @@ This package contains libflatpak.
 
 
 %prep
-%autosetup -S git
+%autosetup -p1
 
 
 %build

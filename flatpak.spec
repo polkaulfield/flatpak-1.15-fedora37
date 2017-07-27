@@ -3,13 +3,15 @@
 
 Name:           flatpak
 Version:        0.9.7
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
+
+Patch0:         OCI-Update-org.opencontainers.ref.name-to-org.openco.patch
 
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gio-unix-2.0)
@@ -104,7 +106,7 @@ This package contains libflatpak.
 
 
 %prep
-%setup -q
+%autosetup -S git
 
 
 %build
@@ -197,6 +199,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Thu Jul 27 2017 Owen Taylor <otaylor@redhat.com> - 0.9.7-3
+- Add a patch to fix OCI refname annotation
+
 * Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.7-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 

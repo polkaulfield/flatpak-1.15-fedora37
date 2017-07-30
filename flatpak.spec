@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        0.9.7
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
@@ -199,6 +199,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Sun Jul 30 2017 Florian Weimer <fweimer@redhat.com> - 0.9.7-4
+- Rebuild with binutils fix for ppc64le (#1475636)
+
 * Thu Jul 27 2017 Owen Taylor <otaylor@redhat.com> - 0.9.7-3
 - Add a patch to fix OCI refname annotation
 

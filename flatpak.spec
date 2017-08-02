@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        0.9.7
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
@@ -199,6 +199,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.7-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
+
 * Sun Jul 30 2017 Florian Weimer <fweimer@redhat.com> - 0.9.7-4
 - Rebuild with binutils fix for ppc64le (#1475636)
 

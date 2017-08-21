@@ -1,17 +1,15 @@
 %global bubblewrap_version 0.1.8
-%global ostree_version 2017.7
+%global ostree_version 2017.10
 
 Name:           flatpak
-Version:        0.9.7
-Release:        5%{?dist}
+Version:        0.9.8
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
-
-Patch0:         OCI-Update-org.opencontainers.ref.name-to-org.openco.patch
 
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gio-unix-2.0)
@@ -47,10 +45,6 @@ Requires:       /usr/bin/fusermount
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
 
-# Remove in F27.
-Provides:       xdg-app = %{version}-%{release}
-Obsoletes:      xdg-app <= 0.5.2-2
-
 %description
 flatpak is a system for building, distributing and running sandboxed desktop
 applications on Linux. See https://wiki.gnome.org/Projects/SandboxedApps for
@@ -70,9 +64,6 @@ Requires:       /usr/bin/tar
 Requires:       /usr/bin/unzip
 # For debuginfo.
 Requires:       /usr/bin/eu-strip
-# Remove in F27.
-Provides:       xdg-app-builder = %{version}-%{release}
-Obsoletes:      xdg-app-builder <= 0.5.2-2
 
 %description builder
 flatpak-builder is a tool that makes it easy to build applications and their
@@ -84,9 +75,6 @@ Group:          Development/Libraries
 License:        LGPLv2+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
-# Remove in F27.
-Provides:       xdg-app-devel%{?_isa} = %{version}-%{release}
-Obsoletes:      xdg-app-devel <= 0.5.2-2
 
 %description devel
 This package contains the pkg-config file and development headers for %{name}.
@@ -97,9 +85,6 @@ Group:          Development/Libraries
 License:        LGPLv2+
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree%{?_isa} >= %{ostree_version}
-# Remove in F27.
-Provides:       xdg-app-libs%{?_isa} = %{version}-%{release}
-Obsoletes:      xdg-app-libs <= 0.5.2-2
 
 %description libs
 This package contains libflatpak.
@@ -199,6 +184,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Mon Aug 21 2017 David King <amigadave@amigadave.com> - 0.9.8-1
+- Update to 0.9.8
+
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.7-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 

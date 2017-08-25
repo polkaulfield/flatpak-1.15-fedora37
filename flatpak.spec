@@ -3,13 +3,16 @@
 
 Name:           flatpak
 Version:        0.9.8
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
+
+# Backported from upstream
+Patch0:         0001-Fix-regression-in-devel.patch
 
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gio-unix-2.0)
@@ -184,6 +187,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Fri Aug 25 2017 Kalev Lember <klember@redhat.com> - 0.9.8-2
+- Backport a patch to fix regression in --devel
+
 * Mon Aug 21 2017 David King <amigadave@amigadave.com> - 0.9.8-1
 - Update to 0.9.8
 

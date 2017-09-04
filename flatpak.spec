@@ -2,8 +2,8 @@
 %global ostree_version 2017.10
 
 Name:           flatpak
-Version:        0.9.8
-Release:        2%{?dist}
+Version:        0.9.10
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 Group:          Development/Tools
@@ -11,15 +11,11 @@ License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 
-# Backported from upstream
-Patch0:         0001-Fix-regression-in-devel.patch
-
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 1.40.0
 BuildRequires:  pkgconfig(json-glib-1.0)
 BuildRequires:  pkgconfig(libarchive) >= 2.8.0
-BuildRequires:  pkgconfig(libelf) >= 0.8.12
 BuildRequires:  pkgconfig(libsoup-2.4)
 BuildRequires:  pkgconfig(libxml-2.0) >= 2.4
 BuildRequires:  pkgconfig(ostree-1) >= %{ostree_version}
@@ -29,11 +25,9 @@ BuildRequires:  pkgconfig(xau)
 BuildRequires:  bubblewrap >= %{bubblewrap_version}
 BuildRequires:  docbook-dtds
 BuildRequires:  docbook-style-xsl
+BuildRequires:  gettext
 BuildRequires:  gpgme-devel
-BuildRequires:  intltool
-BuildRequires:  libattr-devel
 BuildRequires:  libcap-devel
-BuildRequires:  libdwarf-devel
 BuildRequires:  systemd
 BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
@@ -52,25 +46,6 @@ Requires:       ostree-libs%{?_isa} >= %{ostree_version}
 flatpak is a system for building, distributing and running sandboxed desktop
 applications on Linux. See https://wiki.gnome.org/Projects/SandboxedApps for
 more information.
-
-%package builder
-Summary:        Build helper for %{name}
-Group:          Development/Tools
-License:        LGPLv2+
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       /usr/bin/bzip2
-Requires:       /usr/bin/bzr
-Requires:       /usr/bin/git
-Requires:       /usr/bin/patch
-Requires:       /usr/bin/strip
-Requires:       /usr/bin/tar
-Requires:       /usr/bin/unzip
-# For debuginfo.
-Requires:       /usr/bin/eu-strip
-
-%description builder
-flatpak-builder is a tool that makes it easy to build applications and their
-dependencies by automating the configure && make && make install steps.
 
 %package devel
 Summary:        Development files for %{name}
@@ -100,7 +75,7 @@ This package contains libflatpak.
 %build
 (if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--enable-gtk-doc; fi;
  # User namespace support is sufficient.
- %configure --with-dwarf-header=%{_includedir}/libdwarf --with-priv-mode=none \
+ %configure --with-priv-mode=none \
             --with-system-bubblewrap --enable-docbook-docs $CONFIGFLAGS)
 %make_build V=1
 
@@ -156,9 +131,7 @@ flatpak remote-list --system &> /dev/null || :
 %{_mandir}/man5/flatpak-flatpakref.5*
 %{_mandir}/man5/flatpak-flatpakrepo.5*
 %{_mandir}/man5/flatpak-installation.5*
-%{_mandir}/man5/flatpak-manifest.5*
 %{_mandir}/man5/flatpak-remote.5*
-%exclude %{_mandir}/man1/flatpak-builder.1*
 %{_sysconfdir}/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
 %{_sysconfdir}/flatpak/remotes.d
 %{_sysconfdir}/profile.d/flatpak.sh
@@ -168,10 +141,6 @@ flatpak remote-list --system &> /dev/null || :
 %{_userunitdir}/xdg-permission-store.service
 # Co-own directory.
 %{_userunitdir}/dbus.service.d
-
-%files builder
-%{_bindir}/flatpak-builder
-%{_mandir}/man1/flatpak-builder.1*
 
 %files devel
 %{_datadir}/gir-1.0/Flatpak-1.0.gir
@@ -187,6 +156,10 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Mon Sep 04 2017 Kalev Lember <klember@redhat.com> - 0.9.10-1
+- Update to 0.9.10
+- Split out flatpak-builder to a separate source package
+
 * Fri Aug 25 2017 Kalev Lember <klember@redhat.com> - 0.9.8-2
 - Backport a patch to fix regression in --devel
 

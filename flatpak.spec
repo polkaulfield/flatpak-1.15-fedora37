@@ -6,7 +6,6 @@ Version:        0.9.11
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
-Group:          Development/Tools
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
@@ -49,7 +48,6 @@ more information.
 
 %package devel
 Summary:        Development files for %{name}
-Group:          Development/Libraries
 License:        LGPLv2+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
@@ -59,7 +57,6 @@ This package contains the pkg-config file and development headers for %{name}.
 
 %package libs
 Summary:        Libraries for %{name}
-Group:          Development/Libraries
 License:        LGPLv2+
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree%{?_isa} >= %{ostree_version}

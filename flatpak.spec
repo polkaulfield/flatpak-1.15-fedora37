@@ -1,8 +1,8 @@
 %global bubblewrap_version 0.1.8
-%global ostree_version 2017.11
+%global ostree_version 2017.12
 
 Name:           flatpak
-Version:        0.9.98.2
+Version:        0.9.99
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -153,6 +153,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Mon Oct 09 2017 Kalev Lember <klember@redhat.com> - 0.9.99-1
+- Update to 0.9.99
+
 * Tue Sep 26 2017 Kalev Lember <klember@redhat.com> - 0.9.98.2-1
 - Update to 0.9.98.2
 

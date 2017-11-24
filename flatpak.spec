@@ -2,7 +2,7 @@
 %global ostree_version 2017.12
 
 Name:           flatpak
-Version:        0.10.0
+Version:        0.10.1
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -10,6 +10,7 @@ License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 
+BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 1.40.0
@@ -153,6 +154,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Fri Nov 24 2017 David King <amigadave@amigadave.com> - 0.10.1-1
+- Update to 0.10.1
+
 * Thu Oct 26 2017 Kalev Lember <klember@redhat.com> - 0.10.0-1
 - Update to 0.10.0
 

@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        0.10.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -92,10 +92,8 @@ rm -f %{buildroot}%{_libdir}/libflatpak.la
 # Create an (empty) system-wide repo.
 flatpak remote-list --system &> /dev/null || :
 
-%post libs -p /sbin/ldconfig
 
-
-%postun libs -p /sbin/ldconfig
+%ldconfig_scriptlets libs
 
 
 %files -f %{name}.lang
@@ -154,6 +152,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Fri Feb 02 2018 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 0.10.3-2
+- Switch to %%ldconfig_scriptlets
+
 * Tue Jan 30 2018 Kalev Lember <klember@redhat.com> - 0.10.3-1
 - Update to 0.10.3
 

@@ -2,8 +2,8 @@
 %global ostree_version 2017.14
 
 Name:           flatpak
-Version:        0.10.3
-Release:        3%{?dist}
+Version:        0.11.1
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -36,11 +36,12 @@ BuildRequires:  /usr/bin/xsltproc
 # upstream fixes in this version.
 Requires:       kernel >= 4.0.4-202
 
-# Needed for the document portal.
-Requires:       /usr/bin/fusermount
-
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
+
+# Document portal moved to xdg-desktop-portal 0.10 (in flatpak 0.11.1).
+# Remove in F30.
+Conflicts:      xdg-desktop-portal < 0.10
 
 %description
 flatpak is a system for building, distributing and running sandboxed desktop
@@ -105,11 +106,7 @@ flatpak remote-list --system &> /dev/null || :
 %{_bindir}/flatpak-bisect
 %{_datadir}/bash-completion
 %{_datadir}/dbus-1/interfaces/org.freedesktop.Flatpak.xml
-%{_datadir}/dbus-1/interfaces/org.freedesktop.portal.Documents.xml
-%{_datadir}/dbus-1/interfaces/org.freedesktop.impl.portal.PermissionStore.xml
 %{_datadir}/dbus-1/services/org.freedesktop.Flatpak.service
-%{_datadir}/dbus-1/services/org.freedesktop.impl.portal.PermissionStore.service
-%{_datadir}/dbus-1/services/org.freedesktop.portal.Documents.service
 %{_datadir}/dbus-1/system-services/org.freedesktop.Flatpak.SystemHelper.service
 # Co-own directory.
 %{_datadir}/gdm/env.d
@@ -119,8 +116,6 @@ flatpak remote-list --system &> /dev/null || :
 %{_libexecdir}/flatpak-dbus-proxy
 %{_libexecdir}/flatpak-session-helper
 %{_libexecdir}/flatpak-system-helper
-%{_libexecdir}/xdg-document-portal
-%{_libexecdir}/xdg-permission-store
 %dir %{_localstatedir}/lib/flatpak
 %{_mandir}/man1/%{name}*.1*
 %{_mandir}/man5/%{name}-metadata.5*
@@ -133,8 +128,6 @@ flatpak remote-list --system &> /dev/null || :
 %{_sysconfdir}/profile.d/flatpak.sh
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-session-helper.service
-%{_userunitdir}/xdg-document-portal.service
-%{_userunitdir}/xdg-permission-store.service
 # Co-own directory.
 %{_userunitdir}/dbus.service.d
 
@@ -152,6 +145,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Wed Feb 14 2018 David King <amigadave@amigadave.com> - 0.11.1-1
+- Update to 0.11.1 (#1545224)
+
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.10.3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 

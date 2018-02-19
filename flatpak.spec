@@ -2,16 +2,17 @@
 %global ostree_version 2017.14
 
 Name:           flatpak
-Version:        0.11.1
+Version:        0.11.2
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
+# https://github.com/flatpak/flatpak/pull/1432
+Patch0:         flatpak-0.11.2-include-sys_mman_h.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
-BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 1.40.0
 BuildRequires:  pkgconfig(json-glib-1.0)
@@ -145,6 +146,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Mon Feb 19 2018 David King <amigadave@amigadave.com> - 0.11.2-1
+- Update to 0.11.2
+
 * Wed Feb 14 2018 David King <amigadave@amigadave.com> - 0.11.1-1
 - Update to 0.11.1 (#1545224)
 

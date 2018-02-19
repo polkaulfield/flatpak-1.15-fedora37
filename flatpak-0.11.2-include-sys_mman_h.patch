@@ -1,0 +1,26 @@
+From baa8a81ae25f7157a41ee6d43f6fb02fbf2693ab Mon Sep 17 00:00:00 2001
+From: David King <amigadave@amigadave.com>
+Date: Mon, 19 Feb 2018 10:31:41 +0000
+Subject: [PATCH] common: Include sys/mman.h for memfd_create()
+
+Versions of glibc starting with 2.27 include support for memfd_create()
+in sys/mman.h, and the included libglnx then drops its internal define.
+---
+ common/flatpak-utils.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/common/flatpak-utils.c b/common/flatpak-utils.c
+index ef240032..9b18be3a 100644
+--- a/common/flatpak-utils.c
++++ b/common/flatpak-utils.c
+@@ -38,6 +38,7 @@
+ #include <string.h>
+ #include <sys/stat.h>
+ #include <sys/file.h>
++#include <sys/mman.h>
+ #include <sys/types.h>
+ #include <sys/utsname.h>
+ #include <sys/ioctl.h>
+-- 
+2.14.3
+

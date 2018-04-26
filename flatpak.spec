@@ -2,7 +2,7 @@
 %global ostree_version 2017.14
 
 Name:           flatpak
-Version:        0.11.3
+Version:        0.11.4
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -105,7 +105,9 @@ flatpak remote-list --system &> /dev/null || :
 %{_bindir}/flatpak-bisect
 %{_datadir}/bash-completion
 %{_datadir}/dbus-1/interfaces/org.freedesktop.Flatpak.xml
+%{_datadir}/dbus-1/interfaces/org.freedesktop.portal.Flatpak.xml
 %{_datadir}/dbus-1/services/org.freedesktop.Flatpak.service
+%{_datadir}/dbus-1/services/org.freedesktop.portal.Flatpak.service
 %{_datadir}/dbus-1/system-services/org.freedesktop.Flatpak.SystemHelper.service
 # Co-own directory.
 %{_datadir}/gdm/env.d
@@ -113,6 +115,7 @@ flatpak remote-list --system &> /dev/null || :
 %{_datadir}/polkit-1/actions/org.freedesktop.Flatpak.policy
 %{_datadir}/polkit-1/rules.d/org.freedesktop.Flatpak.rules
 %{_libexecdir}/flatpak-dbus-proxy
+%{_libexecdir}/flatpak-portal
 %{_libexecdir}/flatpak-session-helper
 %{_libexecdir}/flatpak-system-helper
 %dir %{_localstatedir}/lib/flatpak
@@ -126,6 +129,7 @@ flatpak remote-list --system &> /dev/null || :
 %{_sysconfdir}/flatpak/remotes.d
 %{_sysconfdir}/profile.d/flatpak.sh
 %{_unitdir}/flatpak-system-helper.service
+%{_userunitdir}/flatpak-portal.service
 %{_userunitdir}/flatpak-session-helper.service
 # Co-own directory.
 %{_userunitdir}/dbus.service.d
@@ -144,6 +148,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Thu Apr 26 2018 Kalev Lember <klember@redhat.com> - 0.11.4-1
+- Update to 0.11.4
+
 * Mon Feb 19 2018 David King <amigadave@amigadave.com> - 0.11.3-1
 - Update to 0.11.3
 

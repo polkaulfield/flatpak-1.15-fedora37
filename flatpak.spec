@@ -21,6 +21,7 @@ BuildRequires:  pkgconfig(ostree-1) >= %{ostree_version}
 BuildRequires:  pkgconfig(polkit-gobject-1)
 BuildRequires:  pkgconfig(libseccomp)
 BuildRequires:  pkgconfig(xau)
+BuildRequires:  bison
 BuildRequires:  bubblewrap >= %{bubblewrap_version}
 BuildRequires:  docbook-dtds
 BuildRequires:  docbook-style-xsl

@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        0.11.7
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -31,10 +31,6 @@ BuildRequires:  libcap-devel
 BuildRequires:  systemd
 BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
-
-# Crashes with older kernels (the bug being introduced in 4.0.2), without the
-# upstream fixes in this version.
-Requires:       kernel >= 4.0.4-202
 
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
@@ -149,6 +145,11 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Wed May 23 2018 Adam Jackson <ajax@redhat.com> - 0.11.7-2
+- Remove Requires: kernel >= 4.0.4-202, which corresponds to rawhide
+  somewhere before Fedora 22 which this spec file certainly no longer
+  supports.
+
 * Thu May 03 2018 Kalev Lember <klember@redhat.com> - 0.11.7-1
 - Update to 0.11.7
 

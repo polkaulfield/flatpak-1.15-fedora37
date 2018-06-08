@@ -1,9 +1,9 @@
-%global bubblewrap_version 0.1.8
-%global ostree_version 2017.14
+%global bubblewrap_version 0.2.1
+%global ostree_version 2017.15
 
 Name:           flatpak
-Version:        0.11.7
-Release:        2%{?dist}
+Version:        0.11.8
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -34,6 +34,7 @@ BuildRequires:  /usr/bin/xsltproc
 
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
+Recommends:     /usr/bin/p11-kit
 
 # Document portal moved to xdg-desktop-portal 0.10 (in flatpak 0.11.1).
 # Remove in F30.
@@ -111,6 +112,7 @@ flatpak remote-list --system &> /dev/null || :
 %{_datadir}/%{name}
 %{_datadir}/polkit-1/actions/org.freedesktop.Flatpak.policy
 %{_datadir}/polkit-1/rules.d/org.freedesktop.Flatpak.rules
+%{_datadir}/zsh/site-functions
 %{_libexecdir}/flatpak-dbus-proxy
 %{_libexecdir}/flatpak-portal
 %{_libexecdir}/flatpak-session-helper
@@ -145,6 +147,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Fri Jun 08 2018 David King <amigadave@amigadave.com> - 0.11.8-1
+- Update to 0.11.8 (#1588868)
+
 * Wed May 23 2018 Adam Jackson <ajax@redhat.com> - 0.11.7-2
 - Remove Requires: kernel >= 4.0.4-202, which corresponds to rawhide
   somewhere before Fedora 22 which this spec file certainly no longer

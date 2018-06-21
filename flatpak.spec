@@ -1,8 +1,8 @@
 %global bubblewrap_version 0.2.1
-%global ostree_version 2017.15
+%global ostree_version 2018.6
 
 Name:           flatpak
-Version:        0.11.8.3
+Version:        0.99.1
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -101,6 +101,7 @@ flatpak remote-list --system &> /dev/null || :
 %doc %{_pkgdocdir}
 %{_bindir}/flatpak
 %{_bindir}/flatpak-bisect
+%{_bindir}/flatpak-coredumpctl
 %{_datadir}/bash-completion
 %{_datadir}/dbus-1/interfaces/org.freedesktop.Flatpak.xml
 %{_datadir}/dbus-1/interfaces/org.freedesktop.portal.Flatpak.xml
@@ -147,6 +148,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Thu Jun 21 2018 David King <amigadave@amigadave.com> - 0.99.1-1
+- Update to 0.99.1
+
 * Wed Jun 13 2018 David King <amigadave@amigadave.com> - 0.11.8.3-1
 - Update to 0.11.8.3 (#1590808)
 

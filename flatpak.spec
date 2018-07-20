@@ -10,6 +10,9 @@ License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 
+# https://github.com/flatpak/flatpak/pull/1914
+Patch0:         0001-libglnx.m4-Include-stdio.h-for-renameat2.patch
+
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 1.40.0
@@ -31,6 +34,10 @@ BuildRequires:  libcap-devel
 BuildRequires:  systemd
 BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
+# For patch0
+BuildRequires:  automake autoconf libtool
+BuildRequires:  gettext-devel
+BuildRequires:  gtk-doc
 
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
@@ -69,6 +76,9 @@ This package contains libflatpak.
 
 
 %build
+# For patch0
+autoreconf -fi
+
 (if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--enable-gtk-doc; fi;
  # User namespace support is sufficient.
  %configure --with-priv-mode=none \

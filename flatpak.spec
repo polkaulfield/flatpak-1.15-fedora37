@@ -2,16 +2,13 @@
 %global ostree_version 2018.6
 
 Name:           flatpak
-Version:        0.99.3
-Release:        2%{?dist}
+Version:        1.0.0
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
-
-# https://github.com/flatpak/flatpak/pull/1914
-Patch0:         0001-libglnx.m4-Include-stdio.h-for-renameat2.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(gio-unix-2.0)
@@ -34,10 +31,6 @@ BuildRequires:  libcap-devel
 BuildRequires:  systemd
 BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
-# For patch0
-BuildRequires:  automake autoconf libtool
-BuildRequires:  gettext-devel
-BuildRequires:  gtk-doc
 
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
@@ -76,9 +69,6 @@ This package contains libflatpak.
 
 
 %build
-# For patch0
-autoreconf -fi
-
 (if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--enable-gtk-doc; fi;
  # User namespace support is sufficient.
  %configure --with-priv-mode=none \
@@ -158,6 +148,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Mon Aug 20 2018 David King <amigadave@amigadave.com> - 1.0.0-1
+- Update to 1.0.0
+
 * Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.99.3-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 

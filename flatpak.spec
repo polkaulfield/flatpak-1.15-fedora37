@@ -1,5 +1,5 @@
 %global bubblewrap_version 0.2.1
-%global ostree_version 2018.6
+%global ostree_version 2018.7
 
 Name:           flatpak
 Version:        1.0.0

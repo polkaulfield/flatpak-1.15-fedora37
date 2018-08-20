@@ -3,12 +3,14 @@
 
 Name:           flatpak
 Version:        1.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
+# https://github.com/flatpak/flatpak/pull/1988
+Patch0:         flatpak-1.0.0-fix-docs-for-gdbus-codegen.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(gio-unix-2.0)
@@ -148,6 +150,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Mon Aug 20 2018 David King <amigadave@amigadave.com> - 1.0.0-2
+- Fix double dash in XML documentation
+
 * Mon Aug 20 2018 David King <amigadave@amigadave.com> - 1.0.0-1
 - Update to 1.0.0
 

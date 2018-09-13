@@ -36,9 +36,14 @@ Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
 Recommends:     /usr/bin/p11-kit
 
-# Document portal moved to xdg-desktop-portal 0.10 (in flatpak 0.11.1).
+# Make sure the document portal is installed
+%if 0%{?fedora} || 0%{?rhel} > 7
+Recommends:     xdg-desktop-portal > 0.10
 # Remove in F30.
 Conflicts:      xdg-desktop-portal < 0.10
+%else
+Requires:       xdg-desktop-portal > 0.10
+%endif
 
 %description
 flatpak is a system for building, distributing and running sandboxed desktop

@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.0.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -34,7 +34,7 @@ BuildRequires:  /usr/bin/xsltproc
 
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
-Recommends:     /usr/bin/p11-kit
+Recommends:     p11-kit-server
 
 # Make sure the document portal is installed
 %if 0%{?fedora} || 0%{?rhel} > 7
@@ -153,6 +153,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Mon Nov 12 2018 Kalev Lember <klember@redhat.com> - 1.0.5-2
+- Recommend p11-kit-server instead of just p11-kit (#1649049)
+
 * Mon Nov 12 2018 Kalev Lember <klember@redhat.com> - 1.0.5-1
 - Update to 1.0.5
 

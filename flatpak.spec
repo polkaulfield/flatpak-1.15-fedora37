@@ -2,7 +2,7 @@
 %global ostree_version 2018.7
 
 Name:           flatpak
-Version:        1.0.4
+Version:        1.0.5
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -153,6 +153,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Mon Nov 12 2018 Kalev Lember <klember@redhat.com> - 1.0.5-1
+- Update to 1.0.5
+
 * Fri Oct 12 2018 Kalev Lember <klember@redhat.com> - 1.0.4-1
 - Update to 1.0.4
 

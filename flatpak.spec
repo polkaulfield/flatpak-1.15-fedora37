@@ -2,8 +2,8 @@
 %global ostree_version 2018.7
 
 Name:           flatpak
-Version:        1.0.5
-Release:        2%{?dist}
+Version:        1.0.6
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -153,6 +153,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Fri Nov 16 2018 Kalev Lember <klember@redhat.com> - 1.0.6-1
+- Update to 1.0.6
+
 * Mon Nov 12 2018 Kalev Lember <klember@redhat.com> - 1.0.5-2
 - Recommend p11-kit-server instead of just p11-kit (#1649049)
 

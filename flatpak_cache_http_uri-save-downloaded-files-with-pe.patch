@@ -1,0 +1,30 @@
+From bb1076ab776886b82efcfee753f201a6ff72dfce Mon Sep 17 00:00:00 2001
+From: "Owen W. Taylor" <otaylor@fishsoup.net>
+Date: Fri, 30 Nov 2018 16:11:06 -0500
+Subject: [PATCH] flatpak_cache_http_uri: save downloaded files with permission
+ 0644
+
+Previously, downloaded files were being saved with 0600 permissions,
+which prevented OCI icons downloaded by the system helper at appstream
+creation time from being read by users.
+---
+ common/flatpak-utils-http.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/common/flatpak-utils-http.c b/common/flatpak-utils-http.c
+index 53074162..997c9db8 100644
+--- a/common/flatpak-utils-http.c
++++ b/common/flatpak-utils-http.c
+@@ -645,6 +645,9 @@ sync_and_rename_tmpfile (GLnxTmpfile *tmpfile,
+   if (fdatasync (tmpfile->fd) != 0)
+     return glnx_throw_errno_prefix (error, "fdatasync");
+ 
++  if (fchmod (tmpfile->fd, 0644) != 0)
++    return glnx_throw_errno_prefix (error, "fchmod");
++
+   if (!glnx_link_tmpfile_at (tmpfile,
+                              GLNX_LINK_TMPFILE_REPLACE,
+                              tmpfile->src_dfd, dest_name, error))
+-- 
+2.19.2
+

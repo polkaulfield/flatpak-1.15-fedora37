@@ -3,12 +3,17 @@
 
 Name:           flatpak
 Version:        1.0.6
-Release:        1%{?dist}
+Release:        3%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
+
+# https://github.com/flatpak/flatpak/pull/2357
+Patch0:        OCI-Use-system-helper-to-generate-summary-for-OCI-re.patch
+# https://github.com/flatpak/flatpak/pull/2362
+Patch1:        flatpak_cache_http_uri-save-downloaded-files-with-pe.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(gio-unix-2.0)
@@ -153,6 +158,10 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Fri Nov 30 2018 fedora-toolbox <otaylor@redhat.com> - 1.0.6-3
+- Add a patch to fix OCI system remotes
+- Add patch fixing permissions on icons downloaded from an OCI registry
+
 * Fri Nov 16 2018 Kalev Lember <klember@redhat.com> - 1.0.6-1
 - Update to 1.0.6
 

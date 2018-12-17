@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.1.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -68,16 +68,33 @@ Requires:       ostree%{?_isa} >= %{ostree_version}
 %description libs
 This package contains libflatpak.
 
+%package tests
+Summary:        Tests for %{name}
+License:        LGPLv2+
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+Requires:       bubblewrap >= %{bubblewrap_version}
+Requires:       ostree%{?_isa} >= %{ostree_version}
+
+%description tests
+This package contains installed tests for %{name}.
+
 
 %prep
 %autosetup -p1
 
 
 %build
+# Fix generic python shebangs.
+find tests -name '*.py' -exec \
+    sed -i -e 's|/usr/bin/python|/usr/bin/python3|' {} +
+
 (if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--enable-gtk-doc; fi;
  # User namespace support is sufficient.
  %configure --with-priv-mode=none \
-            --with-system-bubblewrap --enable-docbook-docs $CONFIGFLAGS)
+            --enable-installed-tests \
+            --with-system-bubblewrap \
+            --enable-docbook-docs $CONFIGFLAGS)
 %make_build V=1
 
 
@@ -151,8 +168,15 @@ flatpak remote-list --system &> /dev/null || :
 %{_libdir}/girepository-1.0/Flatpak-1.0.typelib
 %{_libdir}/libflatpak.so.*
 
+%files tests
+%{_datadir}/installed-tests
+%{_libexecdir}/installed-tests
+
 
 %changelog
+* Mon Dec 17 2018 David King <amigadave@amigadave.com> - 1.1.1-2
+- Enable installed tests and add to tests subpackage
+
 * Mon Dec 10 2018 Kalev Lember <klember@redhat.com> - 1.1.1-1
 - Update to 1.1.1
 

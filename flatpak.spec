@@ -2,8 +2,8 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.1.1
-Release:        2%{?dist}
+Version:        1.1.2
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -174,6 +174,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Fri Dec 21 2018 David King <amigadave@amigadave.com> - 1.1.2-1
+- Update to 1.1.2
+
 * Mon Dec 17 2018 David King <amigadave@amigadave.com> - 1.1.1-2
 - Enable installed tests and add to tests subpackage
 

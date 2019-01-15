@@ -2,7 +2,7 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.1.2
+Version:        1.1.3
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -153,8 +153,7 @@ flatpak remote-list --system &> /dev/null || :
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-portal.service
 %{_userunitdir}/flatpak-session-helper.service
-# Co-own directory.
-%{_userunitdir}/dbus.service.d
+%{_systemd_user_env_generator_dir}/60-flatpak
 
 %files devel
 %{_datadir}/gir-1.0/Flatpak-1.0.gir
@@ -174,6 +173,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Tue Jan 15 2019 Kalev Lember <klember@redhat.com> - 1.1.3-1
+- Update to 1.1.3
+
 * Fri Dec 21 2018 David King <amigadave@amigadave.com> - 1.1.2-1
 - Update to 1.1.2
 

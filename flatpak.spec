@@ -11,6 +11,7 @@ URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 
 BuildRequires:  pkgconfig(appstream-glib)
+BuildRequires:  pkgconfig(dconf)
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 1.40.0
 BuildRequires:  pkgconfig(json-glib-1.0)

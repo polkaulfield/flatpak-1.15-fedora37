@@ -2,7 +2,7 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.1.3
+Version:        1.2.0
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -12,6 +12,7 @@ Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
+BuildRequires:  pkgconfig(gdk-pixbuf-2.0)
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 1.40.0
 BuildRequires:  pkgconfig(json-glib-1.0)
@@ -141,6 +142,7 @@ flatpak remote-list --system &> /dev/null || :
 %{_libexecdir}/flatpak-portal
 %{_libexecdir}/flatpak-session-helper
 %{_libexecdir}/flatpak-system-helper
+%{_libexecdir}/flatpak-validate-icon
 %dir %{_localstatedir}/lib/flatpak
 %{_mandir}/man1/%{name}*.1*
 %{_mandir}/man5/%{name}-metadata.5*
@@ -174,6 +176,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Mon Jan 28 2019 David King <amigadave@amigadave.com> - 1.2.0-1
+- Update to 1.2.0
+
 * Tue Jan 15 2019 Kalev Lember <klember@redhat.com> - 1.1.3-1
 - Update to 1.1.3
 

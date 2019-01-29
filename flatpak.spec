@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.2.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -177,6 +177,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Tue Jan 29 2019 Kalev Lember <klember@redhat.com> - 1.2.0-2
+- Enable libsystemd support
+
 * Mon Jan 28 2019 David King <amigadave@amigadave.com> - 1.2.0-1
 - Update to 1.2.0
 

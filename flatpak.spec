@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.2.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -37,6 +37,7 @@ BuildRequires:  /usr/bin/xsltproc
 
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
+Requires:       librsvg2
 Recommends:     p11-kit-server
 
 # Make sure the document portal is installed
@@ -177,6 +178,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Thu Jan 31 2019 Bastien Nocera <bnocera@redhat.com> - 1.2.0-3
+- Require librsvg2 so SVG icons can be exported
+
 * Tue Jan 29 2019 Kalev Lember <klember@redhat.com> - 1.2.0-2
 - Enable libsystemd support
 

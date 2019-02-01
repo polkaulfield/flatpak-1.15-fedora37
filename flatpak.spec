@@ -36,8 +36,8 @@ BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
 
 Requires:       bubblewrap >= %{bubblewrap_version}
+Requires:       librsvg2%{?_isa}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
-Requires:       librsvg2
 Recommends:     p11-kit-server
 
 # Make sure the document portal is installed

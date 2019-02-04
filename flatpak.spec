@@ -3,12 +3,15 @@
 
 Name:           flatpak
 Version:        1.2.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
+
+# https://github.com/flatpak/flatpak/pull/2661
+Patch0:        build-export-disable-sandbox.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -178,6 +181,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Mon Feb  4 2019 fedora-toolbox <otaylor@redhat.com> - 1.2.0-4
+- Add an upstream patch to add flatpak build-export --disable-sandbox
+
 * Thu Jan 31 2019 Bastien Nocera <bnocera@redhat.com> - 1.2.0-3
 - Require librsvg2 so SVG icons can be exported
 

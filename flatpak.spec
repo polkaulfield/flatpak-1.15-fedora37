@@ -2,16 +2,13 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.2.0
-Release:        4%{?dist}
+Version:        1.2.1
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
-
-# https://github.com/flatpak/flatpak/pull/2661
-Patch0:        build-export-disable-sandbox.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -181,6 +178,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Tue Feb 05 2019 Kalev Lember <klember@redhat.com> - 1.2.1-1
+- Update to 1.2.1
+
 * Mon Feb  4 2019 fedora-toolbox <otaylor@redhat.com> - 1.2.0-4
 - Add an upstream patch to add flatpak build-export --disable-sandbox
 

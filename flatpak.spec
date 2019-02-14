@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.2.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -43,8 +43,6 @@ Recommends:     p11-kit-server
 # Make sure the document portal is installed
 %if 0%{?fedora} || 0%{?rhel} > 7
 Recommends:     xdg-desktop-portal > 0.10
-# Remove in F30.
-Conflicts:      xdg-desktop-portal < 0.10
 %else
 Requires:       xdg-desktop-portal > 0.10
 %endif
@@ -178,6 +176,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Thu Feb 14 2019 David King <amigadave@amigadave.com> - 1.2.3-2
+- Remove an obsolete Conflicts
+
 * Mon Feb 11 2019 David King <amigadave@amigadave.com> - 1.2.3-1
 - Update to 1.2.3
 

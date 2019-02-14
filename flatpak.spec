@@ -32,12 +32,14 @@ BuildRequires:  gettext
 BuildRequires:  gpgme-devel
 BuildRequires:  libcap-devel
 BuildRequires:  systemd
+BuildRequires:  /usr/bin/xdg-dbus-proxy
 BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
 
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       librsvg2%{?_isa}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
+Requires:       /usr/bin/xdg-dbus-proxy
 Recommends:     p11-kit-server
 
 # Make sure the document portal is installed
@@ -96,6 +98,7 @@ find tests -name '*.py' -exec \
  %configure --with-priv-mode=none \
             --enable-installed-tests \
             --with-system-bubblewrap \
+            --with-system-dbus-proxy \
             --enable-docbook-docs $CONFIGFLAGS)
 %make_build V=1
 
@@ -138,7 +141,6 @@ flatpak remote-list --system &> /dev/null || :
 %{_datadir}/polkit-1/actions/org.freedesktop.Flatpak.policy
 %{_datadir}/polkit-1/rules.d/org.freedesktop.Flatpak.rules
 %{_datadir}/zsh/site-functions
-%{_libexecdir}/flatpak-dbus-proxy
 %{_libexecdir}/flatpak-portal
 %{_libexecdir}/flatpak-session-helper
 %{_libexecdir}/flatpak-system-helper
@@ -178,6 +180,7 @@ flatpak remote-list --system &> /dev/null || :
 %changelog
 * Thu Feb 14 2019 David King <amigadave@amigadave.com> - 1.2.3-2
 - Remove an obsolete Conflicts
+- Use xdg-dbus-proxy
 
 * Mon Feb 11 2019 David King <amigadave@amigadave.com> - 1.2.3-1
 - Update to 1.2.3

@@ -2,8 +2,8 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.2.3
-Release:        2%{?dist}
+Version:        1.3.0
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -178,6 +178,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Tue Mar 12 2019 David King <amigadave@amigadave.com> - 1.3.0-1
+- Update to 1.3.0
+
 * Thu Feb 14 2019 David King <amigadave@amigadave.com> - 1.2.3-2
 - Remove an obsolete Conflicts
 - Use xdg-dbus-proxy

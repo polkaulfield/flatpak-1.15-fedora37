@@ -124,9 +124,6 @@ rm -f %{buildroot}%{_libdir}/libflatpak.la
 
 
 %post
-# Create an (empty) system-wide repo.
-flatpak remote-list --system &> /dev/null || :
-
 %systemd_post flatpak-add-fedora-repos.service
 
 if [ $1 -gt 1 ] ; then
@@ -207,6 +204,7 @@ fi
 %changelog
 * Wed Apr 03 2019 Kalev Lember <klember@redhat.com> - 1.3.1-2
 - Add a oneshot systemd service to add Fedora flatpak repos
+- Remove the post script to create system repo now that we have the service
 
 * Wed Mar 27 2019 David King <amigadave@amigadave.com> - 1.3.1-1
 - Update to 1.3.1 (#1693207)

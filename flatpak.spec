@@ -3,12 +3,14 @@
 
 Name:           flatpak
 Version:        1.3.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
+# Add Fedora flatpak repositories
+Source1:        flatpak-add-fedora-repos.service
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -35,6 +37,13 @@ BuildRequires:  systemd
 BuildRequires:  /usr/bin/xdg-dbus-proxy
 BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
+
+%{?systemd_requires}
+
+# Require the version of system-release that adds
+# flatpak-add-fedora-repos.service preset.
+# Should be fine to drop in F32.
+Requires(post): system-release >= 30-0.25
 
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       librsvg2%{?_isa}
@@ -109,6 +118,7 @@ install -pm 644 NEWS README.md %{buildroot}/%{_pkgdocdir}
 # The system repo is not installed by the flatpak build system.
 install -d %{buildroot}%{_localstatedir}/lib/flatpak
 install -d %{buildroot}%{_sysconfdir}/flatpak/remotes.d
+install -D -t %{buildroot}%{_unitdir} %{SOURCE1}
 rm -f %{buildroot}%{_libdir}/libflatpak.la
 %find_lang %{name}
 
@@ -116,6 +126,22 @@ rm -f %{buildroot}%{_libdir}/libflatpak.la
 %post
 # Create an (empty) system-wide repo.
 flatpak remote-list --system &> /dev/null || :
+
+%systemd_post flatpak-add-fedora-repos.service
+
+if [ $1 -gt 1 ] ; then
+        # Apply the preset also on package updates to support F29->F31 upgrade
+        # path. systemd_post macro only handles initial installs and not the
+        # case when a new .service file appears on a package update.
+        # Should be fine to drop in F32.
+        systemctl --no-reload preset flatpak-add-fedora-repos.service >/dev/null 2>&1 || :
+fi
+
+%preun
+%systemd_preun flatpak-add-fedora-repos.service
+
+%postun
+%systemd_postun_with_restart flatpak-add-fedora-repos.service
 
 
 %ldconfig_scriptlets libs
@@ -155,6 +181,7 @@ flatpak remote-list --system &> /dev/null || :
 %{_sysconfdir}/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
 %{_sysconfdir}/flatpak/remotes.d
 %{_sysconfdir}/profile.d/flatpak.sh
+%{_unitdir}/flatpak-add-fedora-repos.service
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-portal.service
 %{_userunitdir}/flatpak-session-helper.service
@@ -178,6 +205,9 @@ flatpak remote-list --system &> /dev/null || :
 
 
 %changelog
+* Wed Apr 03 2019 Kalev Lember <klember@redhat.com> - 1.3.1-2
+- Add a oneshot systemd service to add Fedora flatpak repos
+
 * Wed Mar 27 2019 David King <amigadave@amigadave.com> - 1.3.1-1
 - Update to 1.3.1 (#1693207)
 

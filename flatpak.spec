@@ -2,8 +2,8 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.3.1
-Release:        2%{?dist}
+Version:        1.3.2
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -11,9 +11,11 @@ URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Add Fedora flatpak repositories
 Source1:        flatpak-add-fedora-repos.service
+Patch0:         flatpak-1.3.2-system-helper.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
+BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gdk-pixbuf-2.0)
 BuildRequires:  pkgconfig(gio-unix-2.0)
 BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 1.40.0
@@ -49,6 +51,8 @@ Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       librsvg2%{?_isa}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
 Requires:       /usr/bin/xdg-dbus-proxy
+# https://fedoraproject.org/wiki/SELinux/IndependentPolicy
+Recommends:     flatpak-selinux
 Recommends:     p11-kit-server
 
 # Make sure the document portal is installed
@@ -77,9 +81,23 @@ Summary:        Libraries for %{name}
 License:        LGPLv2+
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree%{?_isa} >= %{ostree_version}
+Requires(pre):  /usr/sbin/useradd
 
 %description libs
 This package contains libflatpak.
+
+%package selinux
+Summary:        SELinux policy module for %{name}
+License:        LGPLv2+
+BuildRequires:  checkpolicy
+BuildRequires:  selinux-policy-devel
+Requires:       selinux-policy
+Requires(post): policycoreutils
+Requires(post): policycoreutils-python
+Requires(postun): policycoreutils-python
+
+%description selinux
+This package contains the SELinux policy module for %{name}.
 
 %package tests
 Summary:        Tests for %{name}
@@ -103,12 +121,14 @@ find tests -name '*.py' -exec \
     sed -i -e 's|/usr/bin/python|/usr/bin/python3|' {} +
 
 (if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--enable-gtk-doc; fi;
- # User namespace support is sufficient.
- %configure --with-priv-mode=none \
+ %configure \
+            --enable-docbook-docs \
             --enable-installed-tests \
+            --enable-selinux-module \
+            --with-priv-mode=none \
             --with-system-bubblewrap \
             --with-system-dbus-proxy \
-            --enable-docbook-docs $CONFIGFLAGS)
+            $CONFIGFLAGS)
 %make_build V=1
 
 
@@ -123,6 +143,14 @@ rm -f %{buildroot}%{_libdir}/libflatpak.la
 %find_lang %{name}
 
 
+%pre
+getent group flatpak >/dev/null || groupadd -r flatpak
+getent passwd flatpak >/dev/null || \
+    useradd -r -g flatpak -d / -s /sbin/nologin \
+     -c "User for flatpak system helper" flatpak
+exit 0
+
+
 %post
 %systemd_post flatpak-add-fedora-repos.service
 
@@ -134,11 +162,21 @@ if [ $1 -gt 1 ] ; then
         systemctl --no-reload preset flatpak-add-fedora-repos.service >/dev/null 2>&1 || :
 fi
 
+%post selinux
+%selinux_modules_install %{_datadir}/selinux/packages/flatpak.pp.bz2
+
+
 %preun
 %systemd_preun flatpak-add-fedora-repos.service
 
+
 %postun
 %systemd_postun_with_restart flatpak-add-fedora-repos.service
+
+%postun selinux
+if [ $1 -eq 0 ]; then
+    %selinux_modules_uninstall %{_datadir}/selinux/packages/flatpak.pp.bz2
+fi
 
 
 %ldconfig_scriptlets libs
@@ -168,6 +206,7 @@ fi
 %{_libexecdir}/flatpak-session-helper
 %{_libexecdir}/flatpak-system-helper
 %{_libexecdir}/flatpak-validate-icon
+%{_libexecdir}/revokefs-fuse
 %dir %{_localstatedir}/lib/flatpak
 %{_mandir}/man1/%{name}*.1*
 %{_mandir}/man5/%{name}-metadata.5*
@@ -196,12 +235,19 @@ fi
 %{_libdir}/girepository-1.0/Flatpak-1.0.typelib
 %{_libdir}/libflatpak.so.*
 
+%files selinux
+%{_datadir}/selinux/packages/flatpak.pp.bz2
+%{_datadir}/selinux/devel/include/contrib/flatpak.if
+
 %files tests
 %{_datadir}/installed-tests
 %{_libexecdir}/installed-tests
 
 
 %changelog
+* Fri Apr 12 2019 David King <amigadave@amigadave.com> - 1.3.2-1
+- Update to 1.3.2 (#1699338)
+
 * Wed Apr 03 2019 Kalev Lember <klember@redhat.com> - 1.3.1-2
 - Add a oneshot systemd service to add Fedora flatpak repos
 - Remove the post script to create system repo now that we have the service

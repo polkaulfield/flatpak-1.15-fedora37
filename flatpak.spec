@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.3.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -52,7 +52,7 @@ Requires:       librsvg2%{?_isa}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
 Requires:       /usr/bin/xdg-dbus-proxy
 # https://fedoraproject.org/wiki/SELinux/IndependentPolicy
-Recommends:     flatpak-selinux
+Requires:       (flatpak-selinux = %{?epoch:%{epoch}:}%{version}-%{release} if selinux-policy-targeted)
 Recommends:     p11-kit-server
 
 # Make sure the document portal is installed
@@ -91,10 +91,10 @@ Summary:        SELinux policy module for %{name}
 License:        LGPLv2+
 BuildRequires:  checkpolicy
 BuildRequires:  selinux-policy-devel
-Requires:       selinux-policy
+Requires:       selinux-policy >= %{?_selinux_policy_version}
+Requires(post): selinux-policy-base >= %{?_selinux_policy_version}
 Requires(post): policycoreutils
-Requires(post): policycoreutils-python
-Requires(postun): policycoreutils-python
+Requires(postun): policycoreutils
 
 %description selinux
 This package contains the SELinux policy module for %{name}.
@@ -245,6 +245,9 @@ fi
 
 
 %changelog
+* Wed Apr 17 2019 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.3.2-2
+- Fixup selinux requires
+
 * Fri Apr 12 2019 David King <amigadave@amigadave.com> - 1.3.2-1
 - Update to 1.3.2 (#1699338)
 

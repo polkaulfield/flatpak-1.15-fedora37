@@ -91,8 +91,8 @@ Summary:        SELinux policy module for %{name}
 License:        LGPLv2+
 BuildRequires:  checkpolicy
 BuildRequires:  selinux-policy-devel
-Requires:       selinux-policy >= %{?_selinux_policy_version}
-Requires(post): selinux-policy-base >= %{?_selinux_policy_version}
+Requires:       selinux-policy >= %{_selinux_policy_version}
+Requires(post): selinux-policy-base >= %{_selinux_policy_version}
 Requires(post): policycoreutils
 Requires(postun): policycoreutils
 

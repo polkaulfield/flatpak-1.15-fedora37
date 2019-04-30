@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.3.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -120,6 +120,8 @@ find tests -name '*.py' -exec \
     sed -i -e 's|/usr/bin/python|/usr/bin/python3|' {} +
 
 (if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--enable-gtk-doc; fi;
+ # Generate consistent IDs between runs to avoid multilib problems.
+ export XMLTO_FLAGS="--stringparam generate.consistent.ids=1"
  %configure \
             --enable-docbook-docs \
             --enable-installed-tests \
@@ -244,6 +246,9 @@ fi
 
 
 %changelog
+* Tue Apr 30 2019 David King <amigadave@amigadave.com> - 1.3.3-2
+- Generate consistent anchor IDs
+
 * Fri Apr 26 2019 David King <amigadave@amigadave.com> - 1.3.3-1
 - Update to 1.3.3 (#1699338)
 

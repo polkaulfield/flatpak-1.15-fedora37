@@ -2,8 +2,8 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.3.3
-Release:        2%{?dist}
+Version:        1.3.4
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -246,6 +246,9 @@ fi
 
 
 %changelog
+* Fri May 10 2019 Kalev Lember <klember@redhat.com> - 1.3.4-1
+- Update to 1.3.4
+
 * Tue Apr 30 2019 David King <amigadave@amigadave.com> - 1.3.3-2
 - Generate consistent anchor IDs
 

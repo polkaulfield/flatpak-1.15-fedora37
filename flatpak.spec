@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.4.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -11,6 +11,9 @@ URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Add Fedora flatpak repositories
 Source1:        flatpak-add-fedora-repos.service
+
+# Backported from upstream
+Patch0:         0001-transaction-Add-back-support-for-file-uris-in-Runtim.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -246,6 +249,9 @@ fi
 
 
 %changelog
+* Wed Jun 12 2019 Kalev Lember <klember@redhat.com> - 1.4.0-2
+- Backport an upstream patch to fix gnome-software CI
+
 * Tue May 28 2019 Kalev Lember <klember@redhat.com> - 1.4.0-1
 - Update to 1.4.0
 

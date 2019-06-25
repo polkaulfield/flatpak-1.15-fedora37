@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.4.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -52,6 +52,7 @@ Requires:       ostree-libs%{?_isa} >= %{ostree_version}
 Requires:       /usr/bin/xdg-dbus-proxy
 # https://fedoraproject.org/wiki/SELinux/IndependentPolicy
 Requires:       (flatpak-selinux = %{?epoch:%{epoch}:}%{version}-%{release} if selinux-policy-targeted)
+Requires:       %{name}-session-helper%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Recommends:     p11-kit-server
 
 # Make sure the document portal is installed
@@ -97,6 +98,16 @@ Requires(postun): policycoreutils
 
 %description selinux
 This package contains the SELinux policy module for %{name}.
+
+%package session-helper
+Summary:        User D-Bus service used by %{name} and others
+License:        LGPLv2+
+Conflicts:      flatpak < 1.4.1-2
+Requires:       systemd
+
+%description session-helper
+This package contains the org.freedesktop.Flatpak user D-Bus service
+that's used by %{name} and other packages.
 
 %package tests
 Summary:        Tests for %{name}
@@ -192,9 +203,7 @@ fi
 %{_bindir}/flatpak-bisect
 %{_bindir}/flatpak-coredumpctl
 %{_datadir}/bash-completion
-%{_datadir}/dbus-1/interfaces/org.freedesktop.Flatpak.xml
 %{_datadir}/dbus-1/interfaces/org.freedesktop.portal.Flatpak.xml
-%{_datadir}/dbus-1/services/org.freedesktop.Flatpak.service
 %{_datadir}/dbus-1/services/org.freedesktop.portal.Flatpak.service
 %{_datadir}/dbus-1/system-services/org.freedesktop.Flatpak.SystemHelper.service
 # Co-own directory.
@@ -204,7 +213,6 @@ fi
 %{_datadir}/polkit-1/rules.d/org.freedesktop.Flatpak.rules
 %{_datadir}/zsh/site-functions
 %{_libexecdir}/flatpak-portal
-%{_libexecdir}/flatpak-session-helper
 %{_libexecdir}/flatpak-system-helper
 %{_libexecdir}/flatpak-validate-icon
 %{_libexecdir}/revokefs-fuse
@@ -221,7 +229,6 @@ fi
 %{_unitdir}/flatpak-add-fedora-repos.service
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-portal.service
-%{_userunitdir}/flatpak-session-helper.service
 %{_systemd_user_env_generator_dir}/60-flatpak
 
 %files devel
@@ -240,12 +247,22 @@ fi
 %{_datadir}/selinux/packages/flatpak.pp.bz2
 %{_datadir}/selinux/devel/include/contrib/flatpak.if
 
+%files session-helper
+%license COPYING
+%{_datadir}/dbus-1/interfaces/org.freedesktop.Flatpak.xml
+%{_datadir}/dbus-1/services/org.freedesktop.Flatpak.service
+%{_libexecdir}/flatpak-session-helper
+%{_userunitdir}/flatpak-session-helper.service
+
 %files tests
 %{_datadir}/installed-tests
 %{_libexecdir}/installed-tests
 
 
 %changelog
+* Tue Jun 25 2019 Debarshi Ray <rishi@fedoraproject.org> - 1.4.1-2
+- Split the session helper into a separate sub-package
+
 * Thu Jun 13 2019 Kalev Lember <klember@redhat.com> - 1.4.1-1
 - Update to 1.4.1
 

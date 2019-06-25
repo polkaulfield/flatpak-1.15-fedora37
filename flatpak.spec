@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.4.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -91,7 +91,7 @@ Summary:        SELinux policy module for %{name}
 License:        LGPLv2+
 BuildRequires:  checkpolicy
 BuildRequires:  selinux-policy-devel
-Requires:       selinux-policy >= %{_selinux_policy_version}
+Requires(post): selinux-policy >= %{_selinux_policy_version}
 Requires(post): selinux-policy-base >= %{_selinux_policy_version}
 Requires(post): policycoreutils
 Requires(postun): policycoreutils
@@ -260,6 +260,9 @@ fi
 
 
 %changelog
+* Tue Jun 25 2019 David King <amigadave@amigadave.com> - 1.4.1-3
+- Use Requires(post) for selinux-policy (#1723118)
+
 * Tue Jun 25 2019 Debarshi Ray <rishi@fedoraproject.org> - 1.4.1-2
 - Split the session helper into a separate sub-package
 

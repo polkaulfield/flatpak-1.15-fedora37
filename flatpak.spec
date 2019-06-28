@@ -2,8 +2,8 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.4.1
-Release:        3%{?dist}
+Version:        1.4.2
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -260,6 +260,9 @@ fi
 
 
 %changelog
+* Fri Jun 28 2019 David King <amigadave@amigadave.com> - 1.4.2-1
+- Update to 1.4.2 (#1725071)
+
 * Tue Jun 25 2019 David King <amigadave@amigadave.com> - 1.4.1-3
 - Use Requires(post) for selinux-policy (#1723118)
 

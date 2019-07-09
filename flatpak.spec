@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.4.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -11,6 +11,9 @@ URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Add Fedora flatpak repositories
 Source1:        flatpak-add-fedora-repos.service
+
+# Backported from upstream
+Patch0:         0001-ref-Fix-a-memory-leak.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -260,6 +263,9 @@ fi
 
 
 %changelog
+* Tue Jul 09 2019 Kalev Lember <klember@redhat.com> - 1.4.2-2
+- Backport a patch that fixes a fairly large memory leak in gnome-software
+
 * Fri Jun 28 2019 David King <amigadave@amigadave.com> - 1.4.2-1
 - Update to 1.4.2 (#1725071)
 

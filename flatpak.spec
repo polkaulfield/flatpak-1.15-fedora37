@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.4.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -97,6 +97,13 @@ BuildRequires:  selinux-policy-devel
 Requires(post): selinux-policy >= %{_selinux_policy_version}
 Requires(post): selinux-policy-base >= %{_selinux_policy_version}
 Requires(post): policycoreutils
+%if 0%{?rhel} == 7
+Requires(post): policycoreutils-python
+%else
+Requires(post): policycoreutils-python-utils
+%endif
+Requires(pre):  libselinux-utils
+Requires(post): libselinux-utils
 Requires(postun): policycoreutils
 
 %description selinux
@@ -263,6 +270,9 @@ fi
 
 
 %changelog
+* Thu Jul 25 2019 Tim Zabel <tjzabel21@gmail.com> - 1.4.2-4
+- SELinux needs additional Requires (#1732132)
+
 * Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.2-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 

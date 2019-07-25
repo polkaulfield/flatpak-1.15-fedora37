@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.4.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -263,6 +263,9 @@ fi
 
 
 %changelog
+* Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.4.2-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Tue Jul 09 2019 Kalev Lember <klember@redhat.com> - 1.4.2-2
 - Backport a patch that fixes a fairly large memory leak in gnome-software
 

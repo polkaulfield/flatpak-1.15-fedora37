@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.4.2
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -14,6 +14,8 @@ Source1:        flatpak-add-fedora-repos.service
 
 # Backported from upstream
 Patch0:         0001-ref-Fix-a-memory-leak.patch
+# https://github.com/flatpak/flatpak/pull/3048
+Patch1:         OCI-correctly-handle-locally-present-icons.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -270,6 +272,9 @@ fi
 
 
 %changelog
+* Wed Aug  7 2019 Owen Taylor <otaylor@redhat.com> - 1.4.2-5
+- Add patch fixing problem with downloading icons for OCI remotes (#1683375)
+
 * Thu Jul 25 2019 Tim Zabel <tjzabel21@gmail.com> - 1.4.2-4
 - SELinux needs additional Requires (#1732132)
 

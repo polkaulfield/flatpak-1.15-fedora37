@@ -1,0 +1,43 @@
+From e71b7d5199c74560acd4033a07c489da4a01dd1b Mon Sep 17 00:00:00 2001
+From: "Owen W. Taylor" <otaylor@fishsoup.net>
+Date: Wed, 7 Aug 2019 16:25:06 -0400
+Subject: [PATCH] OCI: correctly handle locally present icons
+
+If the download URL for an icon was already cached locally, the HTTP
+code returned FLATPAK_OCI_ERROR_NOT_CHANGED - this was treated as a real
+error, and after downloading missing icons, all present icons were
+deleted!
+
+See https://bugzilla.redhat.com/show_bug.cgi?id=1683375
+---
+ common/flatpak-oci-registry.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/common/flatpak-oci-registry.c b/common/flatpak-oci-registry.c
+index 20b1e682..89974234 100644
+--- a/common/flatpak-oci-registry.c
++++ b/common/flatpak-oci-registry.c
+@@ -2215,13 +2215,18 @@ add_icon_image (SoupSession  *soup_session,
+       g_autoptr(SoupURI) base_uri = soup_uri_new (index_uri);
+       g_autoptr(SoupURI) icon_uri = soup_uri_new_with_base (base_uri, icon_data);
+       g_autofree char *icon_uri_s = soup_uri_to_string (icon_uri, FALSE);
++      g_autoptr(GError) local_error = NULL;
+ 
+       if (!flatpak_cache_http_uri (soup_session, icon_uri_s,
+                                    0 /* flags */,
+                                    icons_dfd, icon_path,
+                                    NULL, NULL,
+-                                   cancellable, error))
+-        return FALSE;
++                                   cancellable, &local_error) &&
++          !g_error_matches (local_error, FLATPAK_OCI_ERROR, FLATPAK_OCI_ERROR_NOT_CHANGED))
++        {
++          g_propagate_error (error, g_steal_pointer (&local_error));
++          return FALSE;
++        }
+ 
+       g_hash_table_replace (used_icons, g_steal_pointer (&icon_path), GUINT_TO_POINTER (1));
+ 
+-- 
+2.21.0
+

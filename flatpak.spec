@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.4.2
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -16,6 +16,8 @@ Source1:        flatpak-add-fedora-repos.service
 Patch0:         0001-ref-Fix-a-memory-leak.patch
 # https://github.com/flatpak/flatpak/pull/3048
 Patch1:         OCI-correctly-handle-locally-present-icons.patch
+# https://github.com/flatpak/flatpak/pull/3052
+Patch2:         flatpak-trim-unused-shared-library-linkages.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -43,6 +45,10 @@ BuildRequires:  systemd
 BuildRequires:  /usr/bin/xdg-dbus-proxy
 BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
+# For Patch2
+BuildRequires:  automake autoconf libtool
+BuildRequires:  gettext-devel
+BuildRequires:  gtk-doc
 
 %{?systemd_requires}
 
@@ -272,6 +278,9 @@ fi
 
 
 %changelog
+* Wed Sep 18 2019 Debarshi Ray <rishi@fedoraproject.org> - 1.4.2-6
+- Trim unused shared library linkages from the session helper
+
 * Wed Aug  7 2019 Owen Taylor <otaylor@redhat.com> - 1.4.2-5
 - Add patch fixing problem with downloading icons for OCI remotes (#1683375)
 

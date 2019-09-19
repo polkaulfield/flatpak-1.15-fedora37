@@ -2,8 +2,8 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.4.2
-Release:        6%{?dist}
+Version:        1.4.3
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -14,8 +14,6 @@ Source1:        flatpak-add-fedora-repos.service
 
 # Backported from upstream
 Patch0:         0001-ref-Fix-a-memory-leak.patch
-# https://github.com/flatpak/flatpak/pull/3048
-Patch1:         OCI-correctly-handle-locally-present-icons.patch
 # https://github.com/flatpak/flatpak/pull/3052
 Patch2:         flatpak-trim-unused-shared-library-linkages.patch
 
@@ -278,6 +276,9 @@ fi
 
 
 %changelog
+* Thu Sep 19 2019 Kalev Lember <klember@redhat.com> - 1.4.3-1
+- Update to 1.4.3
+
 * Wed Sep 18 2019 Debarshi Ray <rishi@fedoraproject.org> - 1.4.2-6
 - Trim unused shared library linkages from the session helper
 

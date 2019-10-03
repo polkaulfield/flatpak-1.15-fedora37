@@ -2,7 +2,7 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.4.3
+Version:        1.5.0
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -11,11 +11,6 @@ URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Add Fedora flatpak repositories
 Source1:        flatpak-add-fedora-repos.service
-
-# Backported from upstream
-Patch0:         0001-ref-Fix-a-memory-leak.patch
-# https://github.com/flatpak/flatpak/pull/3052
-Patch2:         flatpak-trim-unused-shared-library-linkages.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -43,10 +38,6 @@ BuildRequires:  systemd
 BuildRequires:  /usr/bin/xdg-dbus-proxy
 BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
-# For Patch2
-BuildRequires:  automake autoconf libtool
-BuildRequires:  gettext-devel
-BuildRequires:  gtk-doc
 
 %{?systemd_requires}
 
@@ -276,6 +267,9 @@ fi
 
 
 %changelog
+* Thu Oct 03 2019 David King <amigadave@amigadave.com> - 1.5.0-1
+- Update to 1.5.0
+
 * Thu Sep 19 2019 Kalev Lember <klember@redhat.com> - 1.4.3-1
 - Update to 1.4.3
 

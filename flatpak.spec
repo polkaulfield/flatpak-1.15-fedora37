@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.5.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -89,19 +89,10 @@ This package contains libflatpak.
 %package selinux
 Summary:        SELinux policy module for %{name}
 License:        LGPLv2+
-BuildRequires:  checkpolicy
+BuildRequires:  selinux-policy
 BuildRequires:  selinux-policy-devel
-Requires(post): selinux-policy >= %{_selinux_policy_version}
-Requires(post): selinux-policy-base >= %{_selinux_policy_version}
-Requires(post): policycoreutils
-%if 0%{?rhel} == 7
-Requires(post): policycoreutils-python
-%else
-Requires(post): policycoreutils-python-utils
-%endif
-Requires(pre):  libselinux-utils
-Requires(post): libselinux-utils
-Requires(postun): policycoreutils
+BuildArch:      noarch
+%{?selinux_requires}
 
 %description selinux
 This package contains the SELinux policy module for %{name}.
@@ -267,6 +258,9 @@ fi
 
 
 %changelog
+* Fri Nov 01 2019 Orion Poplawski <orion@nwra.com> - 1.5.0-2
+- Use %%{?selinux_requires} for proper install ordering
+
 * Thu Oct 03 2019 David King <amigadave@amigadave.com> - 1.5.0-1
 - Update to 1.5.0
 

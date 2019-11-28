@@ -1,9 +1,9 @@
-%global bubblewrap_version 0.2.1
+%global bubblewrap_version 0.4.0
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.5.0
-Release:        2%{?dist}
+Version:        1.5.1
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -112,6 +112,7 @@ Summary:        Tests for %{name}
 License:        LGPLv2+
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+Requires:       %{name}-session-helper%{?_isa} = %{version}-%{release}
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree%{?_isa} >= %{ostree_version}
 
@@ -202,6 +203,7 @@ fi
 %{_bindir}/flatpak-coredumpctl
 %{_datadir}/bash-completion
 %{_datadir}/dbus-1/interfaces/org.freedesktop.portal.Flatpak.xml
+%{_datadir}/dbus-1/interfaces/org.freedesktop.Flatpak.Authenticator.xml
 %{_datadir}/dbus-1/services/org.freedesktop.portal.Flatpak.service
 %{_datadir}/dbus-1/system-services/org.freedesktop.Flatpak.SystemHelper.service
 # Co-own directory.
@@ -258,6 +260,9 @@ fi
 
 
 %changelog
+* Thu Nov 28 2019 David King <amigadave@amigadave.com> - 1.5.1-1
+- Update to 1.5.1
+
 * Fri Nov 01 2019 Orion Poplawski <orion@nwra.com> - 1.5.0-2
 - Use %%{?selinux_requires} for proper install ordering
 

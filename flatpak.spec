@@ -2,7 +2,7 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.5.1
+Version:        1.5.2
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -204,6 +204,7 @@ fi
 %{_datadir}/bash-completion
 %{_datadir}/dbus-1/interfaces/org.freedesktop.portal.Flatpak.xml
 %{_datadir}/dbus-1/interfaces/org.freedesktop.Flatpak.Authenticator.xml
+%{_datadir}/dbus-1/services/org.flatpak.Authenticator.Oci.service
 %{_datadir}/dbus-1/services/org.freedesktop.portal.Flatpak.service
 %{_datadir}/dbus-1/system-services/org.freedesktop.Flatpak.SystemHelper.service
 # Co-own directory.
@@ -212,6 +213,7 @@ fi
 %{_datadir}/polkit-1/actions/org.freedesktop.Flatpak.policy
 %{_datadir}/polkit-1/rules.d/org.freedesktop.Flatpak.rules
 %{_datadir}/zsh/site-functions
+%{_libexecdir}/flatpak-oci-authenticator
 %{_libexecdir}/flatpak-portal
 %{_libexecdir}/flatpak-system-helper
 %{_libexecdir}/flatpak-validate-icon
@@ -228,6 +230,7 @@ fi
 %{_sysconfdir}/profile.d/flatpak.sh
 %{_unitdir}/flatpak-add-fedora-repos.service
 %{_unitdir}/flatpak-system-helper.service
+%{_userunitdir}/flatpak-oci-authenticator.service
 %{_userunitdir}/flatpak-portal.service
 %{_systemd_user_env_generator_dir}/60-flatpak
 
@@ -260,6 +263,9 @@ fi
 
 
 %changelog
+* Mon Dec 16 2019 David King <amigadave@amigadave.com> - 1.5.2-1
+- Update to 1.5.2
+
 * Thu Nov 28 2019 David King <amigadave@amigadave.com> - 1.5.1-1
 - Update to 1.5.1
 

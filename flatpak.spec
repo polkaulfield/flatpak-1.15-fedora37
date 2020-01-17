@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.6.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -125,10 +125,6 @@ This package contains installed tests for %{name}.
 
 
 %build
-# Fix generic python shebangs.
-find tests -name '*.py' -exec \
-    sed -i -e 's|/usr/bin/python|/usr/bin/python3|' {} +
-
 (if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--enable-gtk-doc; fi;
  # Generate consistent IDs between runs to avoid multilib problems.
  export XMLTO_FLAGS="--stringparam generate.consistent.ids=1"
@@ -263,6 +259,9 @@ fi
 
 
 %changelog
+* Fri Jan 17 2020 David King <amigadave@amigadave.com> - 1.6.0-2
+- Remove broken python3 sed hack
+
 * Fri Dec 20 2019 David King <amigadave@amigadave.com> - 1.6.0-1
 - Update to 1.6.0
 

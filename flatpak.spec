@@ -2,8 +2,8 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.6.0
-Release:        2%{?dist}
+Version:        1.6.1
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -259,6 +259,9 @@ fi
 
 
 %changelog
+* Thu Jan 23 2020 David King <amigadave@amigadave.com> - 1.6.1-1
+- Update to 1.6.1
+
 * Fri Jan 17 2020 David King <amigadave@amigadave.com> - 1.6.0-2
 - Remove broken python3 sed hack
 

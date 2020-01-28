@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.6.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -259,6 +259,9 @@ fi
 
 
 %changelog
+* Tue Jan 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.6.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Thu Jan 23 2020 David King <amigadave@amigadave.com> - 1.6.1-1
 - Update to 1.6.1
 

@@ -2,7 +2,7 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.7.1
+Version:        1.7.2
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -204,6 +204,7 @@ fi
 %{_datadir}/dbus-1/services/org.flatpak.Authenticator.Oci.service
 %{_datadir}/dbus-1/services/org.freedesktop.portal.Flatpak.service
 %{_datadir}/dbus-1/system-services/org.freedesktop.Flatpak.SystemHelper.service
+%{_datadir}/fish/
 # Co-own directory.
 %{_datadir}/gdm/env.d
 %{_datadir}/%{name}
@@ -260,6 +261,9 @@ fi
 
 
 %changelog
+* Fri Apr 03 2020 Kalev Lember <klember@redhat.com> - 1.7.2-1
+- Update to 1.7.2
+
 * Mon Mar 30 2020 David King <amigadave@amigadave.com> - 1.7.1-1
 - Update to 1.7.1 (#1818882)
 

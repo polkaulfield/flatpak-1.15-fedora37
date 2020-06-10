@@ -2,7 +2,7 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.7.2
+Version:        1.7.3
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -24,6 +24,7 @@ BuildRequires:  pkgconfig(libseccomp)
 BuildRequires:  pkgconfig(libsoup-2.4)
 BuildRequires:  pkgconfig(libsystemd)
 BuildRequires:  pkgconfig(libxml-2.0) >= 2.4
+BuildRequires:  pkgconfig(libzstd) >= 0.8.1
 BuildRequires:  pkgconfig(ostree-1) >= %{ostree_version}
 BuildRequires:  pkgconfig(polkit-gobject-1)
 BuildRequires:  pkgconfig(xau)
@@ -226,6 +227,7 @@ fi
 %{_sysconfdir}/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
 %{_sysconfdir}/flatpak/remotes.d
 %{_sysconfdir}/profile.d/flatpak.sh
+%{_sysusersdir}/flatpak.conf
 %{_unitdir}/flatpak-add-fedora-repos.service
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-oci-authenticator.service
@@ -261,6 +263,9 @@ fi
 
 
 %changelog
+* Wed Jun 10 2020 David King <amigadave@amigadave.com> - 1.7.3-1
+- Update to 1.7.3 (#1820762)
+
 * Fri Apr 03 2020 Kalev Lember <klember@redhat.com> - 1.7.2-1
 - Update to 1.7.2
 

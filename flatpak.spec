@@ -2,7 +2,7 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.7.3
+Version:        1.8.0
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -206,8 +206,6 @@ fi
 %{_datadir}/dbus-1/services/org.freedesktop.portal.Flatpak.service
 %{_datadir}/dbus-1/system-services/org.freedesktop.Flatpak.SystemHelper.service
 %{_datadir}/fish/
-# Co-own directory.
-%{_datadir}/gdm/env.d
 %{_datadir}/%{name}
 %{_datadir}/polkit-1/actions/org.freedesktop.Flatpak.policy
 %{_datadir}/polkit-1/rules.d/org.freedesktop.Flatpak.rules
@@ -263,6 +261,9 @@ fi
 
 
 %changelog
+* Wed Jun 24 2020 David King <amigadave@amigadave.com> - 1.8.0-1
+- Update to 1.8.0 (#1850676)
+
 * Wed Jun 10 2020 David King <amigadave@amigadave.com> - 1.7.3-1
 - Update to 1.7.3 (#1820762)
 

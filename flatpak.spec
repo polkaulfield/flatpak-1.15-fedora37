@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.8.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -127,6 +127,11 @@ This package contains installed tests for %{name}.
 
 
 %build
+# gobject introspection does not work with LTO.  There is an effort to fix this
+# in the appropriate project upstreams, so hopefully LTO can be enabled someday
+# Disable LTO.
+%define _lto_cflags %{nil}
+
 (if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--enable-gtk-doc; fi;
  # Generate consistent IDs between runs to avoid multilib problems.
  export XMLTO_FLAGS="--stringparam generate.consistent.ids=1"
@@ -261,6 +266,9 @@ fi
 
 
 %changelog
+* Tue Jun 30 2020 Jeff Law <law@redhat.com> - 1.8.0-2
+Disable LTO
+
 * Wed Jun 24 2020 David King <amigadave@amigadave.com> - 1.8.0-1
 - Update to 1.8.0 (#1850676)
 

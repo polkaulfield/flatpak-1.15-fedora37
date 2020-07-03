@@ -2,8 +2,8 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.8.0
-Release:        2%{?dist}
+Version:        1.8.1
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -266,8 +266,11 @@ fi
 
 
 %changelog
+* Fri Jul 03 2020 David King <amigadave@amigadave.com> - 1.8.1-1
+- Update to 1.8.1 (#1853667)
+
 * Tue Jun 30 2020 Jeff Law <law@redhat.com> - 1.8.0-2
-Disable LTO
+- Disable LTO
 
 * Wed Jun 24 2020 David King <amigadave@amigadave.com> - 1.8.0-1
 - Update to 1.8.0 (#1850676)

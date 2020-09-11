@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.8.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -11,6 +11,10 @@ URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Add Fedora flatpak repositories
 Source1:        flatpak-add-fedora-repos.service
+# Various OCI fixes backported from upstream
+Patch0:         3845.patch
+Patch1:         3849.patch
+Patch2:         3850.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -266,6 +270,9 @@ fi
 
 
 %changelog
+* Fri Sep 11 2020 Kalev Lember <klember@redhat.com> - 1.8.2-2
+- Backport various OCI fixes from upstream
+
 * Fri Aug 21 2020 Kalev Lember <klember@redhat.com> - 1.8.2-1
 - Update to 1.8.2
 

@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.8.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -15,6 +15,9 @@ Source1:        flatpak-add-fedora-repos.service
 Patch0:         3845.patch
 Patch1:         3849.patch
 Patch2:         3850.patch
+
+# Fix bogus volatiles caught by gcc-11
+Patch3:         %{name}-gcc11.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -270,6 +273,9 @@ fi
 
 
 %changelog
+* Sat Oct 31 2020 Jeff Law <law@redhat.com> - 1.8.2-3
+- Fix bogus volatiles caught by gcc-11
+
 * Fri Sep 11 2020 Kalev Lember <klember@redhat.com> - 1.8.2-2
 - Backport various OCI fixes from upstream
 

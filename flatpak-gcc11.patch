@@ -1,0 +1,39 @@
+diff --git a/common/flatpak-enum-types.c.template b/common/flatpak-enum-types.c.template
+index 063fd19..0eed041 100644
+--- a/common/flatpak-enum-types.c.template
++++ b/common/flatpak-enum-types.c.template
+@@ -15,7 +15,7 @@
+ GType
+ @enum_name@_get_type (void)
+ {
+-  static volatile gsize g_define_type_id__volatile = 0;
++  static gsize g_define_type_id__volatile = 0;
+ 
+   if (g_once_init_enter (&g_define_type_id__volatile))
+     {
+diff --git a/common/flatpak-portal-error.c b/common/flatpak-portal-error.c
+index 1389707..57c0e78 100644
+--- a/common/flatpak-portal-error.c
++++ b/common/flatpak-portal-error.c
+@@ -38,7 +38,7 @@ static const GDBusErrorEntry flatpak_error_entries[] = {
+ GQuark
+ flatpak_portal_error_quark (void)
+ {
+-  static volatile gsize quark_volatile = 0;
++  static gsize quark_volatile = 0;
+ 
+   g_dbus_error_register_error_domain ("flatpak-portal-error-quark",
+                                       &quark_volatile,
+diff --git a/common/flatpak-utils.c b/common/flatpak-utils.c
+index 16c307e..5461457 100644
+--- a/common/flatpak-utils.c
++++ b/common/flatpak-utils.c
+@@ -94,7 +94,7 @@ propagate_libarchive_error (GError        **error,
+ GQuark
+ flatpak_error_quark (void)
+ {
+-  static volatile gsize quark_volatile = 0;
++  static gsize quark_volatile = 0;
+ 
+   g_dbus_error_register_error_domain ("flatpak-error-quark",
+                                       &quark_volatile,

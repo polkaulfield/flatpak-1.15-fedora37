@@ -2,8 +2,8 @@
 %global ostree_version 2018.9
 
 Name:           flatpak
-Version:        1.8.2
-Release:        3%{?dist}
+Version:        1.8.3
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -11,10 +11,6 @@ URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Add Fedora flatpak repositories
 Source1:        flatpak-add-fedora-repos.service
-# Various OCI fixes backported from upstream
-Patch0:         3845.patch
-Patch1:         3849.patch
-Patch2:         3850.patch
 
 # Fix bogus volatiles caught by gcc-11
 Patch3:         %{name}-gcc11.patch
@@ -273,6 +269,9 @@ fi
 
 
 %changelog
+* Tue Nov 17 2020 Kalev Lember <klember@redhat.com> - 1.8.3-1
+- Update to 1.8.3
+
 * Sat Oct 31 2020 Jeff Law <law@redhat.com> - 1.8.2-3
 - Fix bogus volatiles caught by gcc-11
 

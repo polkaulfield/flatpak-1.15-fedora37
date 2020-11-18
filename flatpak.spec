@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.8.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -45,11 +45,6 @@ BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
 
 %{?systemd_requires}
-
-# Require the version of system-release that adds
-# flatpak-add-fedora-repos.service preset.
-# Should be fine to drop in F32.
-Requires(post): system-release >= 30-0.25
 
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       librsvg2%{?_isa}
@@ -269,6 +264,9 @@ fi
 
 
 %changelog
+* Wed Nov 18 2020 David King <amigadave@amigadave.com> - 1.8.3-2
+- Drop obsolete Requires on system-release
+
 * Tue Nov 17 2020 Kalev Lember <klember@redhat.com> - 1.8.3-1
 - Update to 1.8.3
 

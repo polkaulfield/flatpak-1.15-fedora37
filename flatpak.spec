@@ -1,9 +1,9 @@
 %global bubblewrap_version 0.4.0
-%global ostree_version 2018.9
+%global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.8.3
-Release:        2%{?dist}
+Version:        1.9.1
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -264,6 +264,9 @@ fi
 
 
 %changelog
+* Thu Nov 19 2020 Kalev Lember <klember@redhat.com> - 1.9.1-1
+- Update to 1.9.1
+
 * Wed Nov 18 2020 David King <amigadave@amigadave.com> - 1.8.3-2
 - Drop obsolete Requires on system-release
 

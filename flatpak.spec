@@ -2,7 +2,7 @@
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.9.2
+Version:        1.9.3
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -265,6 +265,9 @@ fi
 
 
 %changelog
+* Tue Dec 22 2020 David King <amigadave@amigadave.com> - 1.9.3-1
+- Update to 1.9.3 (#1910054)
+
 * Fri Nov 20 2020 Kalev Lember <klember@redhat.com> - 1.9.2-1
 - Update to 1.9.2
 

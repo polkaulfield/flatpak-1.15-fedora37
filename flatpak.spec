@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.9.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -265,6 +265,9 @@ fi
 
 
 %changelog
+* Mon Jan 11 2021 Kalev Lember <klember@redhat.com> - 1.9.3-2
+- Use "Fedora Flatpaks" as the visible repo name
+
 * Tue Dec 22 2020 David King <amigadave@amigadave.com> - 1.9.3-1
 - Update to 1.9.3 (#1910054)
 

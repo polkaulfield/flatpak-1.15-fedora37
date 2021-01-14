@@ -2,8 +2,8 @@
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.9.3
-Release:        2%{?dist}
+Version:        1.10.0
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -11,9 +11,6 @@ URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Add Fedora flatpak repositories
 Source1:        flatpak-add-fedora-repos.service
-
-# Fix bogus volatiles caught by gcc-11
-Patch3:         %{name}-gcc11.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -234,6 +231,7 @@ fi
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-oci-authenticator.service
 %{_userunitdir}/flatpak-portal.service
+%{_systemd_system_env_generator_dir}/60-flatpak-system-only
 %{_systemd_user_env_generator_dir}/60-flatpak
 
 %files devel
@@ -265,6 +263,9 @@ fi
 
 
 %changelog
+* Thu Jan 14 2021 Kalev Lember <klember@redhat.com> - 1.10.0-1
+- Update to 1.10.0
+
 * Mon Jan 11 2021 Kalev Lember <klember@redhat.com> - 1.9.3-2
 - Use "Fedora Flatpaks" as the visible repo name
 

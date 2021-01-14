@@ -88,7 +88,7 @@ Summary:        SELinux policy module for %{name}
 License:        LGPLv2+
 BuildRequires:  selinux-policy
 BuildRequires:  selinux-policy-devel
-BuildRequires: make
+BuildRequires:  make
 BuildArch:      noarch
 %{?selinux_requires}
 

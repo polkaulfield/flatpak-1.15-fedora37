@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.10.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -11,6 +11,10 @@ URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Add Fedora flatpak repositories
 Source1:        flatpak-add-fedora-repos.service
+
+# https://github.com/flatpak/flatpak/pull/4119
+# https://bugzilla.redhat.com/show_bug.cgi?id=1927439
+Patch0:         0001-Add-G_BEGIN_DECLS-G_END_DECLS-to-public-headers.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -263,6 +267,9 @@ fi
 
 
 %changelog
+* Fri Feb 12 2021 Kalev Lember <klember@redhat.com> - 1.10.1-3
+- Add G_BEGIN_DECLS/G_END_DECLS to public headers (#1927439)
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.10.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 

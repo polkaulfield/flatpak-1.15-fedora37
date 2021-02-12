@@ -193,9 +193,6 @@ if [ $1 -eq 0 ]; then
 fi
 
 
-%ldconfig_scriptlets libs
-
-
 %files -f %{name}.lang
 %license COPYING
 # Comply with the packaging guidelines about not mixing relative and absolute
@@ -269,6 +266,7 @@ fi
 %changelog
 * Fri Feb 12 2021 Kalev Lember <klember@redhat.com> - 1.10.1-3
 - Add G_BEGIN_DECLS/G_END_DECLS to public headers (#1927439)
+- Drop unneeded ldconfig_scriptlets macro call
 
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.10.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild

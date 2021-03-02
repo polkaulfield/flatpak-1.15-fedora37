@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.10.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -264,6 +264,10 @@ fi
 
 
 %changelog
+* Tue Mar 02 2021 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 1.10.1-4
+- Rebuilt for updated systemd-rpm-macros
+  See https://pagure.io/fesco/issue/2583.
+
 * Fri Feb 12 2021 Kalev Lember <klember@redhat.com> - 1.10.1-3
 - Add G_BEGIN_DECLS/G_END_DECLS to public headers (#1927439)
 - Drop unneeded ldconfig_scriptlets macro call

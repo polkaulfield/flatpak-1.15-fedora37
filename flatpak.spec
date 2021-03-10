@@ -2,8 +2,8 @@
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.10.1
-Release:        4%{?dist}
+Version:        1.10.2
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -11,10 +11,6 @@ URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Add Fedora flatpak repositories
 Source1:        flatpak-add-fedora-repos.service
-
-# https://github.com/flatpak/flatpak/pull/4119
-# https://bugzilla.redhat.com/show_bug.cgi?id=1927439
-Patch0:         0001-Add-G_BEGIN_DECLS-G_END_DECLS-to-public-headers.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -264,6 +260,9 @@ fi
 
 
 %changelog
+* Wed Mar 10 2021 Kalev Lember <klember@redhat.com> - 1.10.2-1
+- Update to 1.10.2
+
 * Tue Mar 02 2021 Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl> - 1.10.1-4
 - Rebuilt for updated systemd-rpm-macros
   See https://pagure.io/fesco/issue/2583.

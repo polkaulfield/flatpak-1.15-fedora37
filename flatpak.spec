@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.10.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -11,6 +11,10 @@ URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Add Fedora flatpak repositories
 Source1:        flatpak-add-fedora-repos.service
+
+# https://github.com/flatpak/flatpak/pull/4210
+# https://pagure.io/fedora-infrastructure/issue/9840
+Patch0:         0001-OCI-Switch-to-pax-format-for-tar-archives.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -260,6 +264,9 @@ fi
 
 
 %changelog
+* Mon Apr 05 2021 Kalev Lember <klember@redhat.com> - 1.10.2-2
+- OCI: Switch to pax format for tar archives
+
 * Wed Mar 10 2021 Kalev Lember <klember@redhat.com> - 1.10.2-1
 - Update to 1.10.2
 

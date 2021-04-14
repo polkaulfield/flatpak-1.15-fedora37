@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.10.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -156,6 +156,11 @@ install -D -t %{buildroot}%{_unitdir} %{SOURCE1}
 rm -f %{buildroot}%{_libdir}/libflatpak.la
 %find_lang %{name}
 
+# Work around selinux denials, see
+# https://github.com/flatpak/flatpak/issues/4128 for details. Note that we are
+# going to need the system env generator if we should enable malcontent support
+# in the future.
+rm %{buildroot}%{_systemd_system_env_generator_dir}/60-flatpak-system-only
 
 %pre
 getent group flatpak >/dev/null || groupadd -r flatpak
@@ -232,7 +237,6 @@ fi
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-oci-authenticator.service
 %{_userunitdir}/flatpak-portal.service
-%{_systemd_system_env_generator_dir}/60-flatpak-system-only
 %{_systemd_user_env_generator_dir}/60-flatpak
 
 %files devel
@@ -264,6 +268,9 @@ fi
 
 
 %changelog
+* Wed Apr 14 2021 Kalev Lember <klember@redhat.com> - 1.10.2-3
+- Disable system env generator to work around selinux denials (#1947214)
+
 * Mon Apr 05 2021 Kalev Lember <klember@redhat.com> - 1.10.2-2
 - OCI: Switch to pax format for tar archives
 

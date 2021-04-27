@@ -2,8 +2,8 @@
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.10.2
-Release:        3%{?dist}
+Version:        1.11.1
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -11,10 +11,6 @@ URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
 # Add Fedora flatpak repositories
 Source1:        flatpak-add-fedora-repos.service
-
-# https://github.com/flatpak/flatpak/pull/4210
-# https://pagure.io/fedora-infrastructure/issue/9840
-Patch0:         0001-OCI-Switch-to-pax-format-for-tar-archives.patch
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -268,6 +264,9 @@ fi
 
 
 %changelog
+* Tue Apr 27 2021 David King <amigadave@amigadave.com> - 1.11.1-1
+- Update to 1.11.1 (#1953833)
+
 * Wed Apr 14 2021 Kalev Lember <klember@redhat.com> - 1.10.2-3
 - Disable system env generator to work around selinux denials (#1947214)
 

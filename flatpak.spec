@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.11.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -123,11 +123,6 @@ This package contains installed tests for %{name}.
 
 
 %build
-# gobject introspection does not work with LTO.  There is an effort to fix this
-# in the appropriate project upstreams, so hopefully LTO can be enabled someday
-# Disable LTO.
-%define _lto_cflags %{nil}
-
 (if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--enable-gtk-doc; fi;
  # Generate consistent IDs between runs to avoid multilib problems.
  export XMLTO_FLAGS="--stringparam generate.consistent.ids=1"
@@ -264,6 +259,9 @@ fi
 
 
 %changelog
+* Thu May 13 2021 Jeff Law <jlaw@tachyum.com> - 1.11.1-2
+- Re-enable LTO
+
 * Tue Apr 27 2021 David King <amigadave@amigadave.com> - 1.11.1-1
 - Update to 1.11.1 (#1953833)
 

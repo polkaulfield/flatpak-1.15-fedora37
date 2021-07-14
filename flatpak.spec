@@ -2,8 +2,8 @@
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.11.1
-Release:        2%{?dist}
+Version:        1.11.2
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -259,6 +259,9 @@ fi
 
 
 %changelog
+* Wed Jul 14 2021 David King <amigadave@amigadave.com> - 1.11.2-1
+- Update to 1.11.2 (#1973591)
+
 * Thu May 13 2021 Jeff Law <jlaw@tachyum.com> - 1.11.1-2
 - Re-enable LTO
 

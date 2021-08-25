@@ -2,8 +2,8 @@
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.11.2
-Release:        2%{?dist}
+Version:        1.11.3
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -259,6 +259,9 @@ fi
 
 
 %changelog
+* Wed Aug 25 2021 Kalev Lember <klember@redhat.com> - 1.11.3-1
+- Update to 1.11.3
+
 * Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.11.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 

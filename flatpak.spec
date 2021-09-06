@@ -4,7 +4,7 @@
 
 Name:           flatpak
 Version:        1.13.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -15,6 +15,10 @@ Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/
 # Add Fedora flatpak repositories
 Source1:        flatpak-add-fedora-repos.service
 %endif
+
+# systemd-sysusers config. Only used for the %%pre macro. Must be kept in sync
+# with the config from upstream sources.
+Source2:        flatpak.sysusers.conf
 
 Patch0:         flatpak-selinux-permissions.patch
 
@@ -44,6 +48,7 @@ BuildRequires:  gpgme-devel
 BuildRequires:  libcap-devel
 BuildRequires:  python3-pyparsing
 BuildRequires:  systemd
+BuildRequires:  systemd-rpm-macros
 BuildRequires:  /usr/bin/xdg-dbus-proxy
 BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
@@ -158,11 +163,7 @@ install -D -t %{buildroot}%{_unitdir} %{SOURCE1}
 %find_lang %{name}
 
 %pre
-getent group flatpak >/dev/null || groupadd -r flatpak
-getent passwd flatpak >/dev/null || \
-    useradd -r -g flatpak -d / -s /sbin/nologin \
-     -c "User for flatpak system helper" flatpak
-exit 0
+%sysusers_create_compat %{SOURCE2}
 
 
 %if 0%{?fedora}
@@ -227,7 +228,7 @@ fi
 %{_sysconfdir}/dbus-1/system.d/org.freedesktop.Flatpak.SystemHelper.conf
 %{_sysconfdir}/flatpak/remotes.d
 %{_sysconfdir}/profile.d/flatpak.sh
-%{_sysusersdir}/flatpak.conf
+%{_sysusersdir}/%{name}.conf
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-oci-authenticator.service
 %{_userunitdir}/flatpak-portal.service
@@ -267,6 +268,9 @@ fi
 
 
 %changelog
+* Tue May 17 2022 Timothée Ravier <tim@siosm.fr> - 1.13.2-3
+- Use sysusers_create_compat macro to create user & group.
+
 * Tue Apr 12 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.13.2-2
 - Avoid SELinux denials caused by read access to /etc/passwd, watching files
   inside /usr/libexec and read access to /var/lib/flatpak

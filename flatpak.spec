@@ -2,8 +2,8 @@
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.11.3
-Release:        2%{?dist}
+Version:        1.12.0
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -255,6 +255,9 @@ fi
 
 
 %changelog
+* Fri Oct 08 2021 David King <amigadave@amigadave.com> - 1.12.0-1
+- Update to 1.12.0 (#2012246)
+
 * Thu Sep 09 2021 Kalev Lember <klember@redhat.com> - 1.11.3-2
 - Enable malcontent support
 

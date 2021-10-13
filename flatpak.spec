@@ -2,7 +2,7 @@
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.12.1
+Version:        1.12.2
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -255,6 +255,9 @@ fi
 
 
 %changelog
+* Wed Oct 13 2021 David King <amigadave@amigadave.com> - 1.12.2-1
+- Update to 1.12.2 (#2013492)
+
 * Fri Oct 08 2021 David King <amigadave@amigadave.com> - 1.12.1-1
 - Update to 1.12.1 (#2012273)
 

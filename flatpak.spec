@@ -2,7 +2,7 @@
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.12.3
+Version:        1.12.4
 Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -255,6 +255,9 @@ fi
 
 
 %changelog
+* Tue Jan 18 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.12.4-1
+- Update to 1.12.4 (#2042071)
+
 * Fri Jan 14 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.12.3-1
 - Update to 1.12.3 (#2040094)
 

@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.12.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -44,10 +44,6 @@ BuildRequires:  systemd
 BuildRequires:  /usr/bin/xdg-dbus-proxy
 BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
-
-%if 0%{?fedora}
-%{?systemd_requires}
-%endif
 
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       librsvg2%{?_isa}
@@ -168,14 +164,6 @@ exit 0
 %if 0%{?fedora}
 %post
 %systemd_post flatpak-add-fedora-repos.service
-
-if [ $1 -gt 1 ] ; then
-        # Apply the preset also on package updates to support F29->F31 upgrade
-        # path. systemd_post macro only handles initial installs and not the
-        # case when a new .service file appears on a package update.
-        # Should be fine to drop in F32.
-        systemctl --no-reload preset flatpak-add-fedora-repos.service >/dev/null 2>&1 || :
-fi
 %endif
 
 
@@ -275,6 +263,10 @@ fi
 
 
 %changelog
+* Tue Feb 08 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.12.4-2
+- Don't try to add Fedora's OCI Flatpak repository on RHEL
+- Remove an obsolete Fedora-specific update path
+
 * Thu Jan 20 2022 Fedora Release Engineering <releng@fedoraproject.org> - 1.12.4-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 

@@ -9,8 +9,11 @@ Summary:        Application deployment framework for desktop apps
 License:        LGPLv2+
 URL:            http://flatpak.org/
 Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/%{name}-%{version}.tar.xz
+
+%if 0%{?fedora}
 # Add Fedora flatpak repositories
 Source1:        flatpak-add-fedora-repos.service
+%endif
 
 BuildRequires:  pkgconfig(appstream-glib)
 BuildRequires:  pkgconfig(dconf)
@@ -42,7 +45,9 @@ BuildRequires:  /usr/bin/xdg-dbus-proxy
 BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
 
+%if 0%{?fedora}
 %{?systemd_requires}
+%endif
 
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       librsvg2%{?_isa}
@@ -144,8 +149,12 @@ install -pm 644 NEWS README.md %{buildroot}/%{_pkgdocdir}
 # The system repo is not installed by the flatpak build system.
 install -d %{buildroot}%{_localstatedir}/lib/flatpak
 install -d %{buildroot}%{_sysconfdir}/flatpak/remotes.d
-install -D -t %{buildroot}%{_unitdir} %{SOURCE1}
 rm -f %{buildroot}%{_libdir}/libflatpak.la
+
+%if 0%{?fedora}
+install -D -t %{buildroot}%{_unitdir} %{SOURCE1}
+%endif
+
 %find_lang %{name}
 
 %pre
@@ -156,6 +165,7 @@ getent passwd flatpak >/dev/null || \
 exit 0
 
 
+%if 0%{?fedora}
 %post
 %systemd_post flatpak-add-fedora-repos.service
 
@@ -166,17 +176,24 @@ if [ $1 -gt 1 ] ; then
         # Should be fine to drop in F32.
         systemctl --no-reload preset flatpak-add-fedora-repos.service >/dev/null 2>&1 || :
 fi
+%endif
+
 
 %post selinux
 %selinux_modules_install %{_datadir}/selinux/packages/flatpak.pp.bz2
 
 
+%if 0%{?fedora}
 %preun
 %systemd_preun flatpak-add-fedora-repos.service
+%endif
 
 
+%if 0%{?fedora}
 %postun
 %systemd_postun_with_restart flatpak-add-fedora-repos.service
+%endif
+
 
 %postun selinux
 if [ $1 -eq 0 ]; then
@@ -219,12 +236,15 @@ fi
 %{_sysconfdir}/flatpak/remotes.d
 %{_sysconfdir}/profile.d/flatpak.sh
 %{_sysusersdir}/flatpak.conf
-%{_unitdir}/flatpak-add-fedora-repos.service
 %{_unitdir}/flatpak-system-helper.service
 %{_userunitdir}/flatpak-oci-authenticator.service
 %{_userunitdir}/flatpak-portal.service
 %{_systemd_system_env_generator_dir}/60-flatpak-system-only
 %{_systemd_user_env_generator_dir}/60-flatpak
+
+%if 0%{?fedora}
+%{_unitdir}/flatpak-add-fedora-repos.service
+%endif
 
 %files devel
 %{_datadir}/gir-1.0/Flatpak-1.0.gir

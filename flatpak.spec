@@ -2,8 +2,8 @@
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.12.4
-Release:        3%{?dist}
+Version:        1.12.5
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -263,6 +263,9 @@ fi
 
 
 %changelog
+* Mon Feb 14 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.12.5-1
+- Update to 1.12.5 (#2032528)
+
 * Tue Feb 08 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.12.4-2
 - Don't try to add Fedora's OCI Flatpak repository on RHEL
 - Remove an obsolete Fedora-specific update path

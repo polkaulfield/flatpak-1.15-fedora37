@@ -3,7 +3,7 @@
 
 Name:           flatpak
 Version:        1.12.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -69,8 +69,8 @@ more information.
 %package devel
 Summary:        Development files for %{name}
 License:        LGPLv2+
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       %{name}-libs%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 
 %description devel
 This package contains the pkg-config file and development headers for %{name}.
@@ -110,9 +110,9 @@ that's used by %{name} and other packages.
 %package tests
 Summary:        Tests for %{name}
 License:        LGPLv2+
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
-Requires:       %{name}-session-helper%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       %{name}-libs%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       %{name}-session-helper%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree%{?_isa} >= %{ostree_version}
 
@@ -263,6 +263,9 @@ fi
 
 
 %changelog
+* Wed Mar 02 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.12.6-2
+- Specify the %%{epoch} consistently
+
 * Fri Feb 25 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.12.6-1
 - Update to 1.12.6 (#2053655)
 

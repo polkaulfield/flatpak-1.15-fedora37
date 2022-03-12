@@ -1,9 +1,10 @@
-%global bubblewrap_version 0.4.0
+%global appstream_version 0.14.0
+%global bubblewrap_version 0.5.0
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.12.6
-Release:        2%{?dist}
+Version:        1.13.1
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -15,7 +16,7 @@ Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/
 Source1:        flatpak-add-fedora-repos.service
 %endif
 
-BuildRequires:  pkgconfig(appstream-glib)
+BuildRequires:  pkgconfig(appstream) >= %{appstream_version}
 BuildRequires:  pkgconfig(dconf)
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gdk-pixbuf-2.0)
@@ -45,6 +46,7 @@ BuildRequires:  /usr/bin/xdg-dbus-proxy
 BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
 
+Requires:       appstream%{?_isa} >= %{appstream_version}
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       librsvg2%{?_isa}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
@@ -263,6 +265,9 @@ fi
 
 
 %changelog
+* Sat Mar 12 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.13.1-1
+- Update to 1.13.1 (#2059784)
+
 * Wed Mar 02 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.12.6-2
 - Specify the %%{epoch} consistently
 

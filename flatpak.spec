@@ -4,7 +4,7 @@
 
 Name:           flatpak
 Version:        1.13.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -15,6 +15,8 @@ Source0:        https://github.com/flatpak/flatpak/releases/download/%{version}/
 # Add Fedora flatpak repositories
 Source1:        flatpak-add-fedora-repos.service
 %endif
+
+Patch0:         flatpak-selinux-permissions.patch
 
 BuildRequires:  pkgconfig(appstream) >= %{appstream_version}
 BuildRequires:  pkgconfig(dconf)
@@ -265,6 +267,10 @@ fi
 
 
 %changelog
+* Tue Apr 12 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.13.2-2
+- Avoid SELinux denials caused by read access to /etc/passwd, watching files
+  inside /usr/libexec and read access to /var/lib/flatpak
+
 * Thu Mar 17 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.13.2-1
 - Update to 1.13.2 (#2064038)
 

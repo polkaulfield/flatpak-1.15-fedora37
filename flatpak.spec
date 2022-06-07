@@ -4,7 +4,7 @@
 
 Name:           flatpak
 Version:        1.13.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -21,6 +21,8 @@ Source1:        flatpak-add-fedora-repos.service
 Source2:        flatpak.sysusers.conf
 
 Patch0:         flatpak-selinux-permissions.patch
+# https://github.com/flatpak/flatpak/pull/4914
+Patch1:         flatpak-1.13.2-add-gssproxy-support.patch
 
 BuildRequires:  pkgconfig(appstream) >= %{appstream_version}
 BuildRequires:  pkgconfig(dconf)
@@ -268,6 +270,9 @@ fi
 
 
 %changelog
+* Tue Jun 07 2022 David King <amigadave@amigadave.com> - 1.13.2-4
+- Add gssproxy support
+
 * Tue May 17 2022 Timothée Ravier <tim@siosm.fr> - 1.13.2-3
 - Use sysusers_create_compat macro to create user & group.
 

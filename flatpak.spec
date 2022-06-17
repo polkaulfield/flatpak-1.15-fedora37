@@ -1,10 +1,12 @@
-%global appstream_version 0.14.0
+%global appstream_version 0.15.3
 %global bubblewrap_version 0.5.0
+%global glib_version 2.46.0
+%global libcurl_version 7.29.0
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.13.2
-Release:        4%{?dist}
+Version:        1.13.3
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -20,20 +22,16 @@ Source1:        flatpak-add-fedora-repos.service
 # with the config from upstream sources.
 Source2:        flatpak.sysusers.conf
 
-Patch0:         flatpak-selinux-permissions.patch
-# https://github.com/flatpak/flatpak/pull/4914
-Patch1:         flatpak-1.13.2-add-gssproxy-support.patch
-
 BuildRequires:  pkgconfig(appstream) >= %{appstream_version}
 BuildRequires:  pkgconfig(dconf)
 BuildRequires:  pkgconfig(fuse)
 BuildRequires:  pkgconfig(gdk-pixbuf-2.0)
-BuildRequires:  pkgconfig(gio-unix-2.0)
+BuildRequires:  pkgconfig(gio-unix-2.0) >= %{glib_version}
 BuildRequires:  pkgconfig(gobject-introspection-1.0) >= 1.40.0
 BuildRequires:  pkgconfig(json-glib-1.0)
 BuildRequires:  pkgconfig(libarchive) >= 2.8.0
 BuildRequires:  pkgconfig(libseccomp)
-BuildRequires:  pkgconfig(libsoup-2.4)
+BuildRequires:  pkgconfig(libcurl) >= %{libcurl_version}
 BuildRequires:  pkgconfig(libsystemd)
 BuildRequires:  pkgconfig(libxml-2.0) >= 2.4
 BuildRequires:  pkgconfig(libzstd) >= 0.8.1
@@ -57,6 +55,8 @@ BuildRequires:  /usr/bin/xsltproc
 
 Requires:       appstream%{?_isa} >= %{appstream_version}
 Requires:       bubblewrap >= %{bubblewrap_version}
+Requires:       glib2%{?_isa} >= %{glib_version}
+Requires:       libcurl%{?_isa} >= %{libcurl_version}
 Requires:       librsvg2%{?_isa}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
 Requires:       /usr/bin/xdg-dbus-proxy
@@ -143,6 +143,7 @@ This package contains installed tests for %{name}.
             --enable-docbook-docs \
             --enable-installed-tests \
             --enable-selinux-module \
+            --with-curl \
             --with-priv-mode=none \
             --with-system-bubblewrap \
             --with-system-dbus-proxy \
@@ -270,6 +271,10 @@ fi
 
 
 %changelog
+* Fri Jun 17 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.13.3-1
+- Update to 1.13.3
+- Remove downstream patch for gssproxy support until it gets rebased
+
 * Tue Jun 07 2022 David King <amigadave@amigadave.com> - 1.13.2-4
 - Add gssproxy support
 

@@ -1,0 +1,112 @@
+From 66dec57ed23421c153af4eae36d2c3ca8501e380 Mon Sep 17 00:00:00 2001
+From: Michael Catanzaro <mcatanzaro@redhat.com>
+Date: Thu, 12 May 2022 12:44:59 -0500
+Subject: [PATCH 1/2] Bind gssproxy socket into sandbox environment
+
+We're using a directory rather than binding a socket directly for
+increased robustness. In theory, if gssproxy crashes on the host, a new
+socket that a new gssproxy process creates should be immediately visible
+inside the sandbox. Nifty.
+
+Previously, applications that wanted to use Kerberos authentication
+would have to punch a sandbox hole for the host's KCM socket. In
+contrast, this gssproxy socket is designed for use by sandboxed apps.
+
+See also: https://github.com/gssapi/gssproxy/issues/45
+---
+ common/flatpak-run.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/common/flatpak-run.c b/common/flatpak-run.c
+index e4391019a0..adf54ed474 100644
+--- a/common/flatpak-run.c
++++ b/common/flatpak-run.c
+@@ -923,6 +923,19 @@ flatpak_run_add_pulseaudio_args (FlatpakBwrap         *bwrap,
+     flatpak_bwrap_add_args (bwrap, "--dev-bind", "/dev/snd", "/dev/snd", NULL);
+ }
+ 
++static void
++flatpak_run_add_gssproxy_args (FlatpakBwrap *bwrap)
++{
++  /* We only expose the gssproxy user service. The gssproxy system service is
++   * not intended to be exposed to sandboxed environments.
++   */
++  g_autofree char *gssproxy_host_dir = g_build_filename (g_get_user_runtime_dir (), "gssproxy", NULL);
++  const char *gssproxy_sandboxed_dir = "/var/lib/gssproxy/";
++
++  if (g_file_test (gssproxy_host_dir, G_FILE_TEST_EXISTS))
++    flatpak_bwrap_add_args (bwrap, "--bind", gssproxy_host_dir, gssproxy_sandboxed_dir, NULL);
++}
++
+ static void
+ flatpak_run_add_resolved_args (FlatpakBwrap *bwrap)
+ {
+@@ -4560,7 +4573,10 @@ flatpak_run_app (FlatpakDecomposed *app_ref,
+     }
+ 
+   if ((app_context->shares & FLATPAK_CONTEXT_SHARED_NETWORK) != 0)
+-    flatpak_run_add_resolved_args (bwrap);
++    {
++      flatpak_run_add_gssproxy_args (bwrap);
++      flatpak_run_add_resolved_args (bwrap);
++    }
+ 
+   flatpak_run_add_journal_args (bwrap);
+   add_font_path_args (bwrap);
+
+From d9f214ed47fba50daa433ce6145acd93f56bc781 Mon Sep 17 00:00:00 2001
+From: Michael Catanzaro <mcatanzaro@redhat.com>
+Date: Mon, 23 May 2022 09:59:48 -0500
+Subject: [PATCH 2/2] Block KRB5CCNAME from inheriting into sandbox
+
+If this environment variable is set on the host, it's going to mess up
+authentication in the sandbox. For example, if the host has:
+
+KRB5CCNAME=KCM:
+
+then the sandboxed process will try to use the host KCM socket, which is
+not available in the sandboxed environment, rather than the gssproxy
+socket that we want it to use. We need to unset it to ensure that
+whatever configuration we ship in the runtime gets used instead. We have
+switched the GNOME runtime to use an empty krb5.conf and it works as
+long as we don't break it with this environment variable meant for the
+host.
+---
+ common/flatpak-run.c | 4 +++-
+ doc/flatpak-run.xml  | 1 +
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/common/flatpak-run.c b/common/flatpak-run.c
+index adf54ed474..e689920a08 100644
+--- a/common/flatpak-run.c
++++ b/common/flatpak-run.c
+@@ -1850,7 +1850,8 @@ static const ExportData default_exports[] = {
+   {"XDG_RUNTIME_DIR", NULL},
+ 
+   /* Some env vars are common enough and will affect the sandbox badly
+-     if set on the host. We clear these always. */
++     if set on the host. We clear these always. If updating this list,
++     also update the list in flatpak-run.xml. */
+   {"PYTHONPATH", NULL},
+   {"PERLLIB", NULL},
+   {"PERL5LIB", NULL},
+@@ -1867,6 +1868,7 @@ static const ExportData default_exports[] = {
+   {"GST_PTP_HELPER", NULL},
+   {"GST_PTP_HELPER_1_0", NULL},
+   {"GST_INSTALL_PLUGINS_HELPER", NULL},
++  {"KRB5CCNAME", NULL},
+ };
+ 
+ static const ExportData no_ld_so_cache_exports[] = {
+diff --git a/doc/flatpak-run.xml b/doc/flatpak-run.xml
+index f8d9e5eecd..4dc0b53149 100644
+--- a/doc/flatpak-run.xml
++++ b/doc/flatpak-run.xml
+@@ -97,6 +97,7 @@
+             <member>PERLLIB</member>
+             <member>PERL5LIB</member>
+             <member>XCURSOR_PATH</member>
++            <member>KRB5CCNAME</member>
+         </simplelist>
+         <para>
+             Also several environment variables with the prefix "GST_" that are used by gstreamer

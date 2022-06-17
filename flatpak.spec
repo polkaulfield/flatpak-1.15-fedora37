@@ -6,7 +6,7 @@
 
 Name:           flatpak
 Version:        1.13.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -21,6 +21,9 @@ Source1:        flatpak-add-fedora-repos.service
 # systemd-sysusers config. Only used for the %%pre macro. Must be kept in sync
 # with the config from upstream sources.
 Source2:        flatpak.sysusers.conf
+
+# https://github.com/flatpak/flatpak/pull/4914
+Patch0:         flatpak-1.13.3-add-gssproxy-support.patch
 
 BuildRequires:  pkgconfig(appstream) >= %{appstream_version}
 BuildRequires:  pkgconfig(dconf)
@@ -271,6 +274,9 @@ fi
 
 
 %changelog
+* Fri Jun 17 2022 David King <amigadave@amigadave.com> - 1.13.3-2
+- Add gssproxy support
+
 * Fri Jun 17 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.13.3-1
 - Update to 1.13.3
 - Remove downstream patch for gssproxy support until it gets rebased

@@ -6,7 +6,7 @@
 
 Name:           flatpak
 Version:        1.13.3
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -24,6 +24,9 @@ Source2:        flatpak.sysusers.conf
 
 # https://github.com/flatpak/flatpak/pull/4914
 Patch0:         flatpak-1.13.3-add-gssproxy-support.patch
+
+# https://github.com/flatpak/flatpak/pull/4992
+Patch1:         flatpak-selinux-permissions-01.patch
 
 BuildRequires:  pkgconfig(appstream) >= %{appstream_version}
 BuildRequires:  pkgconfig(dconf)
@@ -275,6 +278,9 @@ fi
 
 
 %changelog
+* Thu Jul 14 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.13.3-4
+- Avoid SELinux denials caused by reading symbolic links in /var/lib/flatpak
+
 * Sun Jun 26 2022 Ralf Corsépius <corsepiu@fedoraproject.org> - 1.13.3-3
 - Let flatpak own %%{_sysconfdir}/flatpak (RHBZ#2101073).
 

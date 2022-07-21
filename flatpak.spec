@@ -6,7 +6,7 @@
 
 Name:           flatpak
 Version:        1.13.3
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -278,6 +278,9 @@ fi
 
 
 %changelog
+* Thu Jul 21 2022 Fedora Release Engineering <releng@fedoraproject.org> - 1.13.3-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
+
 * Thu Jul 14 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.13.3-4
 - Avoid SELinux denials caused by reading symbolic links in /var/lib/flatpak
 

@@ -6,7 +6,7 @@
 
 Name:           flatpak
 Version:        1.13.3
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -59,6 +59,8 @@ BuildRequires:  /usr/bin/xdg-dbus-proxy
 BuildRequires:  /usr/bin/xmlto
 BuildRequires:  /usr/bin/xsltproc
 
+%{?sysusers_requires_compat}
+
 Requires:       appstream%{?_isa} >= %{appstream_version}
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       glib2%{?_isa} >= %{glib_version}
@@ -97,7 +99,6 @@ Summary:        Libraries for %{name}
 License:        LGPLv2+
 Requires:       bubblewrap >= %{bubblewrap_version}
 Requires:       ostree%{?_isa} >= %{ostree_version}
-Requires(pre):  /usr/sbin/useradd
 
 %description libs
 This package contains libflatpak.
@@ -278,6 +279,9 @@ fi
 
 
 %changelog
+* Fri Aug 19 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.13.3-6
+- Use %%sysusers_requires_compat to match %%sysusers_create_compat
+
 * Thu Jul 21 2022 Fedora Release Engineering <releng@fedoraproject.org> - 1.13.3-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
 

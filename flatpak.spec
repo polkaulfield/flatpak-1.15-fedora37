@@ -5,8 +5,8 @@
 %global ostree_version 2020.8
 
 Name:           flatpak
-Version:        1.13.3
-Release:        6%{?dist}
+Version:        1.14.0
+Release:        1%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -24,9 +24,6 @@ Source2:        flatpak.sysusers.conf
 
 # https://github.com/flatpak/flatpak/pull/4914
 Patch0:         flatpak-1.13.3-add-gssproxy-support.patch
-
-# https://github.com/flatpak/flatpak/pull/4992
-Patch1:         flatpak-selinux-permissions-01.patch
 
 BuildRequires:  pkgconfig(appstream) >= %{appstream_version}
 BuildRequires:  pkgconfig(dconf)
@@ -279,6 +276,9 @@ fi
 
 
 %changelog
+* Wed Sep 07 2022 Kalev Lember <klember@redhat.com> - 1.14.0-1
+- Update to 1.14.0
+
 * Fri Aug 19 2022 Debarshi Ray <rishi@fedoraproject.org> - 1.13.3-6
 - Use %%sysusers_requires_compat to match %%sysusers_create_compat
 

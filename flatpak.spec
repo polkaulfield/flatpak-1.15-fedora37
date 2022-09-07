@@ -42,12 +42,14 @@ BuildRequires:  pkgconfig(malcontent-0)
 BuildRequires:  pkgconfig(ostree-1) >= %{ostree_version}
 BuildRequires:  pkgconfig(polkit-gobject-1)
 BuildRequires:  pkgconfig(xau)
+BuildRequires:  autoconf automake libtool
 BuildRequires:  bison
 BuildRequires:  bubblewrap >= %{bubblewrap_version}
 BuildRequires:  docbook-dtds
 BuildRequires:  docbook-style-xsl
-BuildRequires:  gettext
+BuildRequires:  gettext-devel
 BuildRequires:  gpgme-devel
+BuildRequires:  gtk-doc
 BuildRequires:  libcap-devel
 BuildRequires:  python3-pyparsing
 BuildRequires:  systemd
@@ -140,6 +142,7 @@ This package contains installed tests for %{name}.
 
 
 %build
+rm configure
 (if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; CONFIGFLAGS=--enable-gtk-doc; fi;
  # Generate consistent IDs between runs to avoid multilib problems.
  export XMLTO_FLAGS="--stringparam generate.consistent.ids=1"

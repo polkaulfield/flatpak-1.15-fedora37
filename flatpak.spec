@@ -6,7 +6,7 @@
 
 Name:           flatpak
 Version:        1.14.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
 License:        LGPLv2+
@@ -279,6 +279,9 @@ fi
 
 
 %changelog
+* Thu Sep 15 2022 Michael Catanzaro <mcatanzaro@redhat.com> - 1.14.0-2
+- Refresh gssproxy patch to use new socket path
+
 * Wed Sep 07 2022 Kalev Lember <klember@redhat.com> - 1.14.0-1
 - Update to 1.14.0
 

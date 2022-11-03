@@ -3,9 +3,10 @@
 %global glib_version 2.46.0
 %global libcurl_version 7.29.0
 %global ostree_version 2020.8
+%global current_version 1.14.0
 
 Name:           flatpak
-Version:        1.14.0
+Version:        1.15.0
 Release:        2%{?dist}
 Summary:        Application deployment framework for desktop apps
 
@@ -23,7 +24,7 @@ Source1:        flatpak-add-fedora-repos.service
 Source2:        flatpak.sysusers.conf
 
 # https://github.com/flatpak/flatpak/pull/4914
-Patch0:         flatpak-1.13.3-add-gssproxy-support.patch
+# Patch0:         flatpak-1.13.3-add-gssproxy-support.patch
 
 BuildRequires:  pkgconfig(appstream) >= %{appstream_version}
 BuildRequires:  pkgconfig(dconf)
@@ -68,8 +69,8 @@ Requires:       librsvg2%{?_isa}
 Requires:       ostree-libs%{?_isa} >= %{ostree_version}
 Requires:       /usr/bin/xdg-dbus-proxy
 # https://fedoraproject.org/wiki/SELinux/IndependentPolicy
-Requires:       (flatpak-selinux = %{?epoch:%{epoch}:}%{version}-%{release} if selinux-policy-targeted)
-Requires:       %{name}-session-helper%{?_isa} = %{?epoch:%{epoch}:}%{version}-%{release}
+Requires:       (flatpak-selinux = %{?epoch:%{epoch}:}%{current_version}-%{release} if selinux-policy-targeted)
+Requires:       %{name}-session-helper%{?_isa} = %{?epoch:%{epoch}:}%{current_version}-%{release}
 Recommends:     p11-kit-server
 
 # Make sure the document portal is installed
@@ -279,6 +280,9 @@ fi
 
 
 %changelog
+* Thu Nov 03 2022 polkaulfield - 1.15.0
+- Updated to prerelease 1.15.0
+
 * Thu Sep 15 2022 Michael Catanzaro <mcatanzaro@redhat.com> - 1.14.0-2
 - Refresh gssproxy patch to use new socket path
 

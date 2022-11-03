@@ -1,0 +1,46 @@
+2022-11-03 17:21:06,322 - Mock Version: 3.1
+2022-11-03 17:21:06,556 - Start: dnf install
+2022-11-03 17:21:35,708 - Finish: dnf install
+2022-11-03 17:21:36,092 - Start: creating root cache
+2022-11-03 17:21:36,894 - Finish: creating root cache
+2022-11-03 17:21:36,895 - Finish: chroot init
+2022-11-03 17:21:36,978 - Start: build phase for flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:21:36,982 - Start: build setup for flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:22:09,997 - Finish: build setup for flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:22:09,998 - Start: Outputting list of installed packages
+2022-11-03 17:22:10,111 - Finish: Outputting list of installed packages
+2022-11-03 17:22:10,111 - Start: rpmbuild flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:22:10,308 - Finish: rpmbuild flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:22:10,308 - Finish: build phase for flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:22:10,313 - Start: clean chroot
+2022-11-03 17:22:17,082 - Finish: clean chroot
+2022-11-03 17:24:23,120 - Mock Version: 3.1
+2022-11-03 17:24:23,807 - Start: dnf update
+2022-11-03 17:24:25,537 - Finish: dnf update
+2022-11-03 17:24:25,548 - Finish: chroot init
+2022-11-03 17:24:25,551 - Start: build phase for flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:24:25,553 - Start: build setup for flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:24:49,656 - Finish: build setup for flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:24:49,657 - Start: Outputting list of installed packages
+2022-11-03 17:24:49,774 - Finish: Outputting list of installed packages
+2022-11-03 17:24:49,774 - Start: rpmbuild flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:25:35,807 - Finish: rpmbuild flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:25:35,817 - Finish: build phase for flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:25:35,822 - Start: clean chroot
+2022-11-03 17:25:42,493 - Finish: clean chroot
+2022-11-03 17:25:42,494 - Finish: run
+2022-11-03 17:31:43,070 - Mock Version: 3.1
+2022-11-03 17:31:43,720 - Start: dnf update
+2022-11-03 17:31:45,717 - Finish: dnf update
+2022-11-03 17:31:45,735 - Finish: chroot init
+2022-11-03 17:31:45,740 - Start: build phase for flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:31:45,741 - Start: build setup for flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:32:10,050 - Finish: build setup for flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:32:10,051 - Start: Outputting list of installed packages
+2022-11-03 17:32:10,168 - Finish: Outputting list of installed packages
+2022-11-03 17:32:10,168 - Start: rpmbuild flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:32:55,345 - Finish: rpmbuild flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:32:55,361 - Finish: build phase for flatpak-1.15.0-2.fc37.src.rpm
+2022-11-03 17:32:55,371 - Start: clean chroot
+2022-11-03 17:33:02,123 - Finish: clean chroot
+2022-11-03 17:33:02,125 - Finish: run
